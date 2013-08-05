@@ -1,0 +1,11 @@
+Dependencies:
+- Qt4 libraries and devel packages (QtCore, QtGui, QtSql)
+- Kde4 library and devel package
+
+Installation instructions:
+>$ git clone https://github.com/riccardobellini/VehicleReminder.git
+>$ cd VehicleReminder
+>$ mkdir build && cd build
+>$ cmake ..
+>$ make
+>$ make install (may require execution as root)
