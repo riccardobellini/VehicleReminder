@@ -10,3 +10,4 @@ ADD_EXECUTABLE(vehiclereminder ${VR_SRCS})
 TARGET_LINK_LIBRARIES(vehiclereminder ${KDE4_KDEUI_LIBS})
 
 INSTALL(TARGETS vehiclereminder DESTINATION  ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES mainwindow.rc DESTINATION ${DATA_INSTALL_DIR}/vehiclereminder)
