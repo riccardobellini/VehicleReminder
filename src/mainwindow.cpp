@@ -21,6 +21,9 @@
 
 MainWindow::MainWindow()
 {
-
+    // set xml of the main window
+    setXML("mainwindow.rc");
+    
+    setupGUI();
 }
 

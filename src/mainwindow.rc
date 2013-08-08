@@ -1,0 +1,28 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="mainwindow" version="1">
+<!--    <MenuBar>
+        <Menu name="file">
+            <Action name="addOwner" />
+            <Action name="removeOwner" />
+        </Menu>
+        <Menu name="vehicle">
+            <text>&amp;Vehicle</text>
+            <Action name="addVehicle" />
+            <Action name="removeVehicle" />
+            <Separator />
+            <Action name="showDeadlines" />
+            <Action name="checkNow" />
+        </Menu>
+        <Menu name="owners">
+            <text>&amp;Owners</text>
+            <Action name="modifyOwners" />
+        </Menu>
+    </MenuBar>
+    <ToolBar name="mainToolBar">
+        <Action name="addOwner" />
+        <Action name="removeOwner" />
+        <Separator/>
+        <Action name="addVehicle" />
+        <Action name="removeVehicle" />
+    </ToolBar>-->
+</kpartgui>
