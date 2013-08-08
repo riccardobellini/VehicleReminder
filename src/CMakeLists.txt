@@ -2,6 +2,7 @@
 # Vehicle Reminder
 
 SET(VR_SRCS
+    mainwindow.cpp
     main.cpp
 )
 
