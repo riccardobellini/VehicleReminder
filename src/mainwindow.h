@@ -19,14 +19,22 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+// KDE includes
 #include <kxmlguiwindow.h>
 
+
+class MainWindowPrivate;
 
 class MainWindow : public KXmlGuiWindow
 {
 
 public:
     MainWindow();
+    
+private:
+    // private class for view elements
+    // code inspired from Skrooge base gui
+    MainWindowPrivate* const d;
 };
 
 #endif // MAINWINDOW_H

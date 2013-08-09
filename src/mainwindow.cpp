@@ -16,14 +16,44 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// Qt includes
+#include <qscrollarea.h>
+#include <QHBoxLayout>
+
+// Vehicle Reminder includes
 #include "mainwindow.h"
 
+// Uis includes
+#include "ui_mainwidget.h"
 
-MainWindow::MainWindow()
+class MainWindowPrivate
 {
-    // set xml of the main window
-    setXML("mainwindow.rc");
+public:
+    Ui::mainWidget ui;
+    QHBoxLayout *m_mainLayout;
+    QWidget *m_mainWidget;
+};
+
+MainWindow::MainWindow() : d(new MainWindowPrivate)
+{
+    QScrollArea *area = new QScrollArea(this);
+    area->setFrameShape(QFrame::NoFrame);
+    area->setFocusPolicy(Qt::NoFocus);
+    d->ui.setupUi(area);
+    d->m_mainLayout = new QHBoxLayout(area);
+    d->m_mainLayout->setSpacing(0);
+    d->m_mainLayout->setContentsMargins(0, 0, 0, 0);
+    d->m_mainLayout->addWidget(d->ui.dockWidget, 1);
+    d->m_mainWidget = new QWidget(area);
+    d->m_mainLayout->addWidget(d->m_mainWidget, 3);
     
-    setupGUI();
+    QPalette palette = QApplication::palette();
+    palette.setColor(QPalette::Base, Qt::transparent);
+    d->ui.klistwidget->setPalette(palette);
+    d->ui.klistwidget->setFrameShape(QFrame::NoFrame);
+    
+    setCentralWidget(area);
+    
+    setupGUI(Default, "mainwindow.rc");
 }
 

@@ -16,6 +16,7 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// KDE includes
 #include <kaboutdata.h>
 #include <klocalizedstring.h>
 #include <kcmdlineargs.h>
@@ -23,6 +24,7 @@
 #include <kapplication.h>
 #include <kdebug.h>
 
+// Vehicle Reminder includes
 #include "mainwindow.h"
 
 
