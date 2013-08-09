@@ -19,6 +19,7 @@
 // Qt includes
 #include <qscrollarea.h>
 #include <QHBoxLayout>
+#include <qsplitter.h>
 
 // Vehicle Reminder includes
 #include "mainwindow.h"
@@ -32,6 +33,7 @@ public:
     Ui::mainWidget ui;
     QHBoxLayout *m_mainLayout;
     QWidget *m_mainWidget;
+    QSplitter *m_splitter;
 };
 
 MainWindow::MainWindow() : d(new MainWindowPrivate)
@@ -45,7 +47,15 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     d->m_mainLayout->setContentsMargins(0, 0, 0, 0);
     d->m_mainLayout->addWidget(d->ui.dockWidget, 1);
     d->m_mainWidget = new QWidget(area);
-    d->m_mainLayout->addWidget(d->m_mainWidget, 3);
+
+    // FIXME size of widgets
+    d->m_splitter = new QSplitter(Qt::Horizontal, area);
+    d->m_splitter->addWidget(d->ui.dockWidget);
+    d->m_splitter->setStretchFactor(0, 1);
+    d->m_splitter->addWidget(d->m_mainWidget);
+    d->m_splitter->setStretchFactor(1, 2);
+    
+    d->m_mainLayout->addWidget(d->m_splitter);
     
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Base, Qt::transparent);
