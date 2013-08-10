@@ -1,11 +1,13 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="mainwindow" version="1">
-<!--    <MenuBar>
-        <Menu name="file">
-            <Action name="addOwner" />
-            <Action name="removeOwner" />
+<kpartgui name="mainwindow" version="2">
+    <MenuBar>
+        <Menu name="Profile">
+            <text>&amp;Profile</text>
+            <Action name="addProfile" />
+            <Action name="openProfile" />
+            <Action name="removeProfile" />
         </Menu>
-        <Menu name="vehicle">
+<!--        <Menu name="vehicle">
             <text>&amp;Vehicle</text>
             <Action name="addVehicle" />
             <Action name="removeVehicle" />
@@ -16,7 +18,7 @@
         <Menu name="owners">
             <text>&amp;Owners</text>
             <Action name="modifyOwners" />
-        </Menu>
+        </Menu>-->
     </MenuBar>
     <ToolBar name="mainToolBar">
         <Action name="addOwner" />
@@ -24,5 +26,5 @@
         <Separator/>
         <Action name="addVehicle" />
         <Action name="removeVehicle" />
-    </ToolBar>-->
+    </ToolBar>
 </kpartgui>
