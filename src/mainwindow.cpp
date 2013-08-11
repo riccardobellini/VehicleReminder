@@ -20,6 +20,7 @@
 #include <qscrollarea.h>
 #include <QHBoxLayout>
 #include <qsplitter.h>
+#include <qstackedwidget.h>
 
 // Vehicle Reminder includes
 #include "mainwindow.h"
@@ -32,7 +33,7 @@ class MainWindowPrivate
 public:
     Ui::mainWidget ui;
     QHBoxLayout *m_mainLayout;
-    QWidget *m_mainWidget;
+    QStackedWidget *m_mainStackedWidget;
     QSplitter *m_splitter;
 };
 
@@ -46,16 +47,20 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     d->m_mainLayout->setSpacing(0);
     d->m_mainLayout->setContentsMargins(0, 0, 0, 0);
     d->m_mainLayout->addWidget(d->ui.dockWidget, 1);
-    d->m_mainWidget = new QWidget(area);
+    d->m_mainStackedWidget = new QStackedWidget(area);
+    d->m_mainStackedWidget->addWidget(new QWidget(this));
 
     // FIXME size of widgets
     d->m_splitter = new QSplitter(Qt::Horizontal, area);
     d->m_splitter->addWidget(d->ui.dockWidget);
     d->m_splitter->setStretchFactor(0, 1);
-    d->m_splitter->addWidget(d->m_mainWidget);
+    d->m_splitter->addWidget(d->m_mainStackedWidget);
     d->m_splitter->setStretchFactor(1, 2);
     
     d->m_mainLayout->addWidget(d->m_splitter);
+    
+//     d->m_mainStackedWidget->widget(0)->setMinimumSize(800, 300);
+//     d->m_mainStackedWidget->setCurrentIndex(0);
     
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Base, Qt::transparent);
