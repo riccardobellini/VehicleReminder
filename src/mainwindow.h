@@ -27,11 +27,17 @@ class MainWindowPrivate;
 
 class MainWindow : public KXmlGuiWindow
 {
-
+Q_OBJECT
 public:
     MainWindow();
+        
+public Q_SLOTS:
+    void addProfile();
+    void openProfile();
+    void removeProfile();
     
 private:
+    void m_setupActions();
     // private class for view elements
     // code inspired from Skrooge base gui
     MainWindowPrivate* const d;

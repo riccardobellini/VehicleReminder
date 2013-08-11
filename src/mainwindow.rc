@@ -7,24 +7,16 @@
             <Action name="openProfile" />
             <Separator />
             <Action name="removeProfile" />
-        </Menu>
-<!--        <Menu name="vehicle">
-            <text>&amp;Vehicle</text>
-            <Action name="addVehicle" />
-            <Action name="removeVehicle" />
             <Separator />
-            <Action name="showDeadlines" />
-            <Action name="checkNow" />
+            <Action name="quit" />
         </Menu>
-        <Menu name="owners">
-            <text>&amp;Owners</text>
-            <Action name="modifyOwners" />
-        </Menu>-->
     </MenuBar>
     <ToolBar name="mainToolBar">
         <Action name="addProfile" />
         <Action name="openProfile" />
         <Separator />
         <Action name="removeProfile" />
+        <Separator />
+        <Action name="quit" />
     </ToolBar>
 </kpartgui>

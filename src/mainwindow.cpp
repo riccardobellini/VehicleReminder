@@ -16,6 +16,13 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// KDE includes
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <kapplication.h>
+#include <ktoolbar.h>
+#include <kmenubar.h>
+
 // Qt includes
 #include <qscrollarea.h>
 #include <QHBoxLayout>
@@ -35,6 +42,10 @@ public:
     QHBoxLayout *m_mainLayout;
     QStackedWidget *m_mainStackedWidget;
     QSplitter *m_splitter;
+    
+    KAction *m_addProfileAction;
+    KAction *m_openProfileAction;
+    KAction *m_removeProfileAction;
 };
 
 MainWindow::MainWindow() : d(new MainWindowPrivate)
@@ -59,9 +70,6 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     
     d->m_mainLayout->addWidget(d->m_splitter);
     
-//     d->m_mainStackedWidget->widget(0)->setMinimumSize(800, 300);
-//     d->m_mainStackedWidget->setCurrentIndex(0);
-    
     QPalette palette = QApplication::palette();
     palette.setColor(QPalette::Base, Qt::transparent);
     d->ui.klistwidget->setPalette(palette);
@@ -69,6 +77,44 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     
     setCentralWidget(area);
     
+    m_setupActions();
+    
     setupGUI(Default, "mainwindow.rc");
 }
 
+
+void MainWindow::addProfile()
+{
+    // TODO
+}
+
+
+void MainWindow::openProfile()
+{
+    // TODO
+}
+
+
+void MainWindow::removeProfile()
+{
+    // TODO
+}
+
+
+void MainWindow::m_setupActions()
+{
+    d->m_addProfileAction = new KAction(KIcon("list-add-user"), i18n("Add profile"), this);
+    actionCollection()->addAction("addProfile", d->m_addProfileAction);
+    connect(d->m_addProfileAction, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)), this, SLOT(addProfile()));
+    
+    d->m_openProfileAction = new KAction(KIcon("document-open"), i18n("Open profile"), this);
+    actionCollection()->addAction("openProfile", d->m_openProfileAction);
+    connect(d->m_openProfileAction, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)), this, SLOT(openProfile()));
+    
+    d->m_removeProfileAction = new KAction(KIcon("list-remove-user"), i18n("Remove profile"), this);
+    actionCollection()->addAction("removeProfile", d->m_removeProfileAction);
+    connect(d->m_removeProfileAction, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)), this, SLOT(removeProfile()));
+    
+    KAction *quitAction = KStandardAction::quit(kapp, SLOT(closeAllWindows()), this);
+    actionCollection()->addAction("quit", quitAction);
+}
