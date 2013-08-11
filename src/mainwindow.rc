@@ -5,6 +5,7 @@
             <text>&amp;Profile</text>
             <Action name="addProfile" />
             <Action name="openProfile" />
+            <Separator />
             <Action name="removeProfile" />
         </Menu>
 <!--        <Menu name="vehicle">
@@ -21,10 +22,9 @@
         </Menu>-->
     </MenuBar>
     <ToolBar name="mainToolBar">
-        <Action name="addOwner" />
-        <Action name="removeOwner" />
-        <Separator/>
-        <Action name="addVehicle" />
-        <Action name="removeVehicle" />
+        <Action name="addProfile" />
+        <Action name="openProfile" />
+        <Separator />
+        <Action name="removeProfile" />
     </ToolBar>
 </kpartgui>
