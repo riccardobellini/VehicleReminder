@@ -22,6 +22,8 @@
 #include <kapplication.h>
 #include <ktoolbar.h>
 #include <kmenubar.h>
+#include <kmessagebox.h>
+#include <kdebug.h>
 
 // Qt includes
 #include <qscrollarea.h>
@@ -31,6 +33,7 @@
 
 // Vehicle Reminder includes
 #include "mainwindow.h"
+#include "vrdatabase.h"
 
 // Uis includes
 #include "ui_mainwidget.h"
@@ -46,6 +49,8 @@ public:
     KAction *m_addProfileAction;
     KAction *m_openProfileAction;
     KAction *m_removeProfileAction;
+    
+    VRDatabase *m_database;
 };
 
 MainWindow::MainWindow() : d(new MainWindowPrivate)
@@ -78,6 +83,14 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     setCentralWidget(area);
     
     m_setupActions();
+    
+    d->m_database = new VRDatabase(this);
+    // open with default path, temporarily
+    if (!d->m_database->open()) {
+        kFatal() << "Unable to open database, closing";
+        KMessageBox::error(this, i18n("Unable to open database, closing"), i18n("Fatal error"));
+        kapp->quit();
+    }
     
     setupGUI(Default, "mainwindow.rc");
 }

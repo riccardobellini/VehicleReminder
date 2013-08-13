@@ -3,6 +3,8 @@
 
 ADD_SUBDIRECTORY(db)
 
+INCLUDE_DIRECTORIES(db)
+
 SET(VR_SRCS
     mainwindow.cpp
     main.cpp
