@@ -1,6 +1,8 @@
 # Riccardo Bellini <riccardo.bellini1988@gmail.com>
 # Vehicle Reminder
 
+ADD_SUBDIRECTORY(db)
+
 SET(VR_SRCS
     mainwindow.cpp
     main.cpp
@@ -9,7 +11,7 @@ SET(VR_SRCS
 KDE4_ADD_UI_FILES(VR_SRCS uis/mainwidget.ui)
 
 KDE4_ADD_EXECUTABLE(vehiclereminder ${VR_SRCS})
-TARGET_LINK_LIBRARIES(vehiclereminder ${KDE4_KDEUI_LIBS})
+TARGET_LINK_LIBRARIES(vehiclereminder ${KDE4_KDEUI_LIBS} vrDatabase)
 
 INSTALL(TARGETS vehiclereminder DESTINATION  ${INSTALL_TARGETS_DEFAULT_ARGS})
 INSTALL(FILES mainwindow.rc DESTINATION ${DATA_INSTALL_DIR}/vehiclereminder)
