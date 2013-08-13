@@ -30,6 +30,16 @@ VRDatabase::VRDatabase(QObject *parent) : QObject(parent)
 {
     QString type = "QSQLITE";
     m_database = QSqlDatabase::addDatabase(type);
-    QString path = KStandardDirs::locateLocal("appdata", "vr.db");
-    m_database.setDatabaseName(path);
+}
+
+
+bool VRDatabase::open(const QString &dbPath)
+{
+    if (dbPath.isEmpty()) {
+        m_dbPath = KStandardDirs::locateLocal("appdata", "vr.db");
+    } else {
+        m_dbPath = dbPath;
+    }
+    m_database.setDatabaseName(m_dbPath);
+    return m_database.open();
 }

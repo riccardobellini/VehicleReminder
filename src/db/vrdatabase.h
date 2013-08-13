@@ -31,8 +31,11 @@ class VRDatabase : public QObject
 public:
     explicit VRDatabase(QObject *parent = 0);
     
+    bool open(const QString &dbPath = QString());
+    
 private:
     QSqlDatabase m_database;
+    QString m_dbPath;
 };
 
 #endif // VRDATABASE_H
