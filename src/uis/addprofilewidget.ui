@@ -96,7 +96,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="KDateComboBox" name="birthDateComboBox"/>
+         <widget class="QDateEdit" name="birthDateEdit"/>
         </item>
        </layout>
       </widget>
@@ -125,29 +125,40 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>10</number>
+          </property>
           <item>
-           <widget class="QLabel" name="expirationDateLabel">
-            <property name="text">
-             <string>Expiration date:</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="expirationDateLabel">
+              <property name="text">
+               <string>Expiration date:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="expirationDateEdit"/>
+            </item>
+           </layout>
           </item>
           <item>
-           <widget class="KDateComboBox" name="expirationDateComboBox"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="validityYearsLabel">
-            <property name="text">
-             <string>&amp;Years of validity:</string>
-            </property>
-            <property name="buddy">
-             <cstring>validityYearsNumInput</cstring>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="KIntNumInput" name="validityYearsNumInput"/>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="validityYearsLabel">
+              <property name="text">
+               <string>&amp;Years of validity:</string>
+              </property>
+              <property name="buddy">
+               <cstring>validityYearsNumInput</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="KIntNumInput" name="validityYearsNumInput"/>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -297,16 +308,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KDateComboBox</class>
-   <extends>KComboBox</extends>
-   <header>kdatecombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
