@@ -16,6 +16,9 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// Qt includes
+#include <QDateEdit>
+
 // Vehicle Reminder includes
 #include "addprofiledialog.h"
 
@@ -43,12 +46,35 @@ void AddProfileDialog::reset()
 AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui::AddProfile)
 {
     ui->setupUi(this);
+    
+    // setup fields and ranges
+    QDate minDate(1900, 1, 1);
+    QDate maxDate = QDate::currentDate();
+    
+    // FIXME
+    ui->birthDateEdit->setDisplayFormat("dd/MM/yyyy");
+    ui->birthDateEdit->setMinimumDate(minDate);
+    ui->birthDateEdit->setMaximumDate(maxDate);
+    
+    // FIXME
+    ui->expirationDateEdit->setDisplayFormat("dd/MM/yyyy");
+    ui->expirationDateEdit->setMinimumDate(minDate);
+    ui->expirationDateEdit->setMaximumDate(maxDate);
 }
 
 
 void AddProfileWidget::resetFields()
 {
-    // TODO
+    // clear all input fields
+    ui->firstNameLineEdit->clear();
+    ui->secondNameLineEdit->clear();
+    ui->birthDateEdit->setDate(QDate::currentDate());
+    ui->ssnLineEdit->clear();
+    ui->licenseNumberLineEdit->clear();
+    ui->expirationDateEdit->setDate(QDate::currentDate());
+    ui->validityYearsNumInput->setValue(0);
+    ui->pictureToolButton->setIcon(QIcon());
+    ui->otherNotesTextEdit->clear();
 }
 
 
