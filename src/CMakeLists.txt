@@ -6,11 +6,12 @@ ADD_SUBDIRECTORY(db)
 INCLUDE_DIRECTORIES(db)
 
 SET(VR_SRCS
+    addprofiledialog.cpp
     mainwindow.cpp
     main.cpp
 )
 
-KDE4_ADD_UI_FILES(VR_SRCS uis/mainwidget.ui)
+KDE4_ADD_UI_FILES(VR_SRCS uis/mainwidget.ui uis/addprofilewidget.ui)
 
 KDE4_ADD_EXECUTABLE(vehiclereminder ${VR_SRCS})
 TARGET_LINK_LIBRARIES(vehiclereminder ${KDE4_KDEUI_LIBS} vrDatabase)

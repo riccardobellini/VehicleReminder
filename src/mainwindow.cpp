@@ -34,6 +34,7 @@
 // Vehicle Reminder includes
 #include "mainwindow.h"
 #include "vrdatabase.h"
+#include "addprofiledialog.h"
 
 // Uis includes
 #include "ui_mainwidget.h"
@@ -51,6 +52,8 @@ public:
     KAction *m_removeProfileAction;
     
     VRDatabase *m_database;
+    
+    AddProfileDialog *m_addProfileDialog;
 };
 
 MainWindow::MainWindow() : d(new MainWindowPrivate)
@@ -65,6 +68,8 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     d->m_mainLayout->addWidget(d->ui.dockWidget, 1);
     d->m_mainStackedWidget = new QStackedWidget(area);
     d->m_mainStackedWidget->addWidget(new QWidget(this));
+    
+    d->m_addProfileDialog = 0;
 
     // FIXME size of widgets
     d->m_splitter = new QSplitter(Qt::Horizontal, area);
@@ -98,6 +103,14 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
 
 void MainWindow::addProfile()
 {
+    kDebug() << "Add profile called";
+    if (!d->m_addProfileDialog) {
+        d->m_addProfileDialog = new AddProfileDialog(this);
+    } else {
+        d->m_addProfileDialog->reset();
+    }
+    d->m_addProfileDialog->show();
+    
     // TODO
 }
 
