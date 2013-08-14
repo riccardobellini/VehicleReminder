@@ -20,6 +20,7 @@
 #ifndef VRDATABASE_H
 #define VRDATABASE_H
 
+// Qt includes
 #include <qobject.h>
 #include <qsqldatabase.h>
 
