@@ -75,16 +75,6 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="KDateTimeEdit" name="birthDateEdit">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
         <item row="3" column="0">
          <widget class="QLabel" name="ssnLabel">
           <property name="text">
@@ -104,6 +94,9 @@
            </sizepolicy>
           </property>
          </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="KDateComboBox" name="birthDateComboBox"/>
         </item>
        </layout>
       </widget>
@@ -141,7 +134,7 @@
            </widget>
           </item>
           <item>
-           <widget class="KDateTimeEdit" name="expirationDateEdit"/>
+           <widget class="KDateComboBox" name="expirationDateComboBox"/>
           </item>
           <item>
            <widget class="QLabel" name="validityYearsLabel">
@@ -305,9 +298,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KDateTimeEdit</class>
-   <extends>QWidget</extends>
-   <header>kdatetimeedit.h</header>
+   <class>KDateComboBox</class>
+   <extends>KComboBox</extends>
+   <header>kdatecombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
