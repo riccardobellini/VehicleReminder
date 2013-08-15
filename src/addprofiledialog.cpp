@@ -32,7 +32,7 @@ AddProfileDialog::AddProfileDialog(QWidget* parent): KDialog(parent)
     
     setCaption(i18n("Add profile"));
     setButtons(KDialog::Ok | KDialog::Cancel);
-        
+    
     setMainWidget(m_widget);
 }
 
@@ -51,15 +51,22 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     QDate minDate(1900, 1, 1);
     QDate maxDate = QDate::currentDate();
     
-    // FIXME
+    // FIXME try to use KDateComboBox rather than QDateEdit
     ui->birthDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->birthDateEdit->setMinimumDate(minDate);
     ui->birthDateEdit->setMaximumDate(maxDate);
     
-    // FIXME
+    // FIXME try to use KDateComboBox rather than QDateEdit
+    ui->issuingDateEdit->setDisplayFormat("dd/MM/yyyy");
+    ui->issuingDateEdit->setMinimumDate(minDate);
+    ui->issuingDateEdit->setMaximumDate(maxDate);
+    
+    // FIXME try to use KDateComboBox rather than QDateEdit
     ui->expirationDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->expirationDateEdit->setMinimumDate(minDate);
     ui->expirationDateEdit->setMaximumDate(maxDate);
+    
+    ui->validityYearsNumInput->setRange(0, 20);
 }
 
 
@@ -71,6 +78,7 @@ void AddProfileWidget::resetFields()
     ui->birthDateEdit->setDate(QDate::currentDate());
     ui->ssnLineEdit->clear();
     ui->licenseNumberLineEdit->clear();
+    ui->issuingDateEdit->setDate(QDate::currentDate());
     ui->expirationDateEdit->setDate(QDate::currentDate());
     ui->validityYearsNumInput->setValue(0);
     ui->pictureToolButton->setIcon(QIcon());

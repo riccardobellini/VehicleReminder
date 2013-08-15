@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Add profile</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
@@ -125,10 +125,24 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <property name="spacing">
-           <number>10</number>
+           <number>20</number>
           </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="issuingDateLabel">
+              <property name="text">
+               <string>Issuing date:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="issuingDateEdit"/>
+            </item>
+           </layout>
+          </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
@@ -143,22 +157,22 @@
             </item>
            </layout>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="QLabel" name="validityYearsLabel">
-              <property name="text">
-               <string>&amp;Years of validity:</string>
-              </property>
-              <property name="buddy">
-               <cstring>validityYearsNumInput</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="KIntNumInput" name="validityYearsNumInput"/>
-            </item>
-           </layout>
+           <widget class="QLabel" name="validityYearsLabel">
+            <property name="text">
+             <string>&amp;Years of validity:</string>
+            </property>
+            <property name="buddy">
+             <cstring>validityYearsNumInput</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="KIntNumInput" name="validityYearsNumInput"/>
           </item>
          </layout>
         </item>
@@ -169,10 +183,16 @@
    </item>
    <item>
     <widget class="QGroupBox" name="additionalInfoGroupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string>Additional information</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,2">
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="1">
