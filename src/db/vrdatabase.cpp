@@ -26,6 +26,9 @@
 #include "vrdatabase.h"
 
 
+const QString VRDatabase::LatestVersion = "0.1";
+
+
 VRDatabase::VRDatabase(QObject *parent) : QObject(parent)
 {
     QString type = "QSQLITE";
@@ -42,4 +45,20 @@ bool VRDatabase::open(const QString &dbPath)
     }
     m_database.setDatabaseName(m_dbPath);
     return m_database.open();
+}
+
+
+bool VRDatabase::init()
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::migrate(const QString& from, const QString& to)
+{
+    // TODO
+    
+    return true;
 }

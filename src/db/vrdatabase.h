@@ -34,6 +34,11 @@ public:
     
     bool open(const QString &dbPath = QString());
     
+    bool init();
+    bool migrate(const QString &from, const QString &to);
+    
+    static const QString LatestVersion;
+    
 private:
     QSqlDatabase m_database;
     QString m_dbPath;

@@ -23,6 +23,8 @@
 #include <ktoolbar.h>
 #include <kmenubar.h>
 #include <kmessagebox.h>
+#include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <kdebug.h>
 
 // Qt includes
@@ -95,6 +97,24 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
         kFatal() << "Unable to open database, closing";
         KMessageBox::error(this, i18n("Unable to open database, closing"), i18n("Fatal error"));
         kapp->quit();
+    }
+    
+    KConfigGroup generalCfgGroup = KGlobal::config()->group("Database");
+    QString latestVersion = d->m_database->LatestVersion;
+    QString version = generalCfgGroup.readEntry("version", QString());
+    if (version == latestVersion) {
+        // first startup or up-to-date
+        d->m_database->init();
+    } else {
+        // migrate
+        int result = KMessageBox::questionYesNo(this, i18n("Your database needs to be migrated to the latest version. "
+            "Would you like to do the migration now? Answering \"No\" will close the application."), i18n("Database "
+            "migration"));
+        if (result == KMessageBox::Yes) {
+            d->m_database->migrate(version, latestVersion);
+        } else if (result == KMessageBox::No) {
+            kapp->closeAllWindows();
+        }
     }
     
     setupGUI(Default, "mainwindow.rc");
