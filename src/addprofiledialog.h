@@ -45,12 +45,16 @@ private:
 
 class AddProfileWidget : public QWidget
 {
+    Q_OBJECT
 public:
     explicit AddProfileWidget(QWidget *parent = 0);
     
     void resetFields();
     
     ~AddProfileWidget();
+    
+public Q_SLOTS:
+    void loadPicture();
     
 private:
     Ui::AddProfile *ui;

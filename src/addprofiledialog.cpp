@@ -16,6 +16,9 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// KDE includes
+#include <kfiledialog.h>
+
 // Qt includes
 #include <QDateEdit>
 
@@ -67,6 +70,9 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     ui->expirationDateEdit->setMaximumDate(maxDate);
     
     ui->validityYearsNumInput->setRange(0, 20);
+    
+    // connections
+    connect(ui->pictureToolButton, SIGNAL(pressed()), this, SLOT(loadPicture()));
 }
 
 
@@ -83,6 +89,12 @@ void AddProfileWidget::resetFields()
     ui->validityYearsNumInput->setValue(0);
     ui->pictureToolButton->setIcon(QIcon());
     ui->otherNotesTextEdit->clear();
+}
+
+
+void AddProfileWidget::loadPicture()
+{
+    QString imagePath = KFileDialog::getOpenFileName(KUrl(QDir::homePath()), "image/png image/jpeg", this);
 }
 
 
