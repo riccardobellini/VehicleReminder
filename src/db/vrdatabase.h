@@ -40,6 +40,17 @@ public:
     static const QString LatestVersion;
     
 private:
+    bool m_initProfileTable(const QString &toVersion = LatestVersion);
+    bool m_initInsuranceInfoTable(const QString &toVersion = LatestVersion);
+    bool m_initVehicleTypeTable(const QString &toVersion = LatestVersion);
+    bool m_initVehicleTable(const QString &toVersion = LatestVersion);
+    bool m_initRefuellingsLogTable(const QString &toVersion = LatestVersion);
+    bool m_initDeadlineTypeTable(const QString &toVersion = LatestVersion);
+    bool m_initDeadlineTable(const QString &toVersion = LatestVersion);
+    bool m_initServicesLogTable(const QString &toVersion = LatestVersion);
+    bool m_initInsurancePaymentsLogTable(const QString &toVersion = LatestVersion);
+    
+    
     QSqlDatabase m_database;
     QString m_dbPath;
 };

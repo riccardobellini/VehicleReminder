@@ -20,7 +20,7 @@
 #include <kstandarddirs.h>
 
 // Qt includes
-
+#include <qsqlquery.h>
 
 // Vehicle Reminder includes
 #include "vrdatabase.h"
@@ -50,13 +50,113 @@ bool VRDatabase::open(const QString &dbPath)
 
 bool VRDatabase::init()
 {
+    // create all the tables to the latest version
+    if (!m_initProfileTable()) {
+        return false;
+    }
+    if (!m_initVehicleTypeTable()) {
+        return false;
+    }
+    if (!m_initInsuranceInfoTable()) {
+        return false;
+    }
+    if (!m_initVehicleTable()) {
+        return false;
+    }
+    if (!m_initDeadlineTypeTable()) {
+        return false;
+    }
+    if (!m_initDeadlineTable()) {
+        return false;
+    }
+    if (!m_initRefuellingsLogTable()) {
+        return false;
+    }
+    if (!m_initServicesLogTable()) {
+        return false;
+    }
+    if (!m_initInsurancePaymentsLogTable()) {
+        return false;
+    }
+    
+    // if everything went correctly, return true
+    return true;
+}
+
+
+bool VRDatabase::migrate(const QString& from, const QString& to)
+{
     // TODO
     
     return true;
 }
 
 
-bool VRDatabase::migrate(const QString& from, const QString& to)
+bool VRDatabase::m_initProfileTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initVehicleTypeTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initInsuranceInfoTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initVehicleTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initDeadlineTypeTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initDeadlineTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initRefuellingsLogTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initServicesLogTable(const QString& toVersion)
+{
+    // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::m_initInsurancePaymentsLogTable(const QString& toVersion)
 {
     // TODO
     
