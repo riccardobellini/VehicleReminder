@@ -94,7 +94,30 @@ bool VRDatabase::migrate(const QString& from, const QString& to)
 
 bool VRDatabase::m_initProfileTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE profile ("
+            "id INTEGER PRIMARY KEY, "
+            "first_name VARCHAR(50) NOT NULL, "
+            "last_name VARCHAR(50) NOT NULL, "
+            "birthdate DATE NOT NULL, "
+            "ssn VARCHAR(40), "
+            "picture BLOB, "
+            "license_number VARCHAR(30) NOT NULL, "
+            "issuing_date DATE, "
+            "license_expiry DATE, "
+            "license_validity_years INTEGER, "
+            "other_notes TEXT, "
+            "notify BOOLEAN DEFAULT 1)");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            return false;
+        }
+    }
     
     return true;
 }
