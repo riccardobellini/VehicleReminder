@@ -125,7 +125,69 @@ bool VRDatabase::m_initProfileTable(const QString& toVersion)
 
 bool VRDatabase::m_initVehicleTypeTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE vehicle_info ("
+            "id INTEGER PRIMARY KEY, "
+            "make VARCHAR(30) NOT NULL, "
+            "model VARCHAR(30) NOT NULL, "
+            "trim VARCHAR(50), "
+            "year INTEGER DEFAULT NULL, "
+            "body VARCHAR(30) DEFAULT NULL, "
+            "engine_position VARCHAR(20) DEFAULT NULL, "
+            "engine_cc INTEGER DEFAULT NULL, "
+            "engine_cyl INTEGER DEFAULT NULL, "
+            "engine_type VARCHAR(30) DEFAULT NULL, "
+            "engine_valves_per_cyl INTEGER DEFAULT NULL, "
+            "engine_power_ps INTEGER DEFAULT NULL, "
+            "engine_power_rpm INTEGER DEFAULT NULL, "
+            "engine_torque_nm INTEGER DEFAULT NULL, "
+            "engine_torque_rpm INTEGER DEFAULT NULL, "
+            "engine_bore_mm FLOAT DEFAULT NULL, "
+            "engine_stroke_mm FLOAT DEFAULT NULL, "
+            "engine_compression VARCHAR(10) DEFAULT NULL, "
+            "engine_fuel VARCHAR(30) DEFAULT NULL, "
+            "drive VARCHAR(30) DEFAULT NULL, "
+            "transmission_type VARCHAR(30) DEFAULT NULL, "
+            "seats INTEGER DEFAULT NULL, "
+            "doors INTEGER DEFAULT NULL,"
+            "weight_kg INTEGER DEFAULT NULL,"
+            "length_mm INTEGER DEFAULT NULL,"
+            "width_mm INTEGER DEFAULT NULL,"
+            "height_mm INTEGER DEFAULT NULL,"
+            "wheelbase_mm INTEGER DEFAULT NULL,"
+            "lkm_hwy FLOAT DEFAULT NULL,"
+            "lkm_mixed FLOAT DEFAULT NULL,"
+            "lkm_city FLOAT DEFAULT NULL,"
+            "fuel_cap_l INTEGER DEFAULT NULL,"
+            "country VARCHAR(50) DEFAULT NULL,"
+            "engine_l FLOAT DEFAULT NULL,"
+            "engine_ci INTEGER DEFAULT NULL,"
+            "engine_bore_in FLAOT DEFAULT NULL,"
+            "engine_stroke_in FLOAT DEFAULT NULL,"
+            "engine_valves INTEGER DEFAULT NULL,"
+            "engine_power_hp INTEGER DEFAULT NULL,"
+            "engine_power_kw INTEGER DEFAULT NULL,"
+            "engine_torque_lbft INTEGER DEFAULT NULL,"
+            "engine_torque_kgm FLOAT DEFAULT NULL,"
+            "weight_lbs INTEGER DEFAULT NULL,"
+            "length_in FLOAT DEFAULT NULL,"
+            "width_in FLOAT DEFAULT NULL,"
+            "height_in FLOAT DEFAULT NULL,"
+            "wheelbase_in FLOAT DEFAULT NULL,"
+            "mpg_hwy INTEGER DEFAULT NULL,"
+            "mpg_city INTEGER DEFAULT NULL,"
+            "mpg_mixed INTEGER DEFAULT NULL,"
+            "fuel_cap_gal FLOAT DEFAULT NULL)");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            return false;
+        }
+    }
     
     return true;
 }
