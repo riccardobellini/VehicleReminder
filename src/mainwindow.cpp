@@ -103,7 +103,7 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     QString latestVersion = d->m_database->LatestVersion;
     QString version = generalCfgGroup.readEntry("version", QString());
     if (version.isEmpty()) {
-        // first startup or up-to-date
+        // first startup
         d->m_database->init();
         // TODO write the version in the config file if everything is alright
     } else {
