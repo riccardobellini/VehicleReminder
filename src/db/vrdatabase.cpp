@@ -199,7 +199,27 @@ bool VRDatabase::m_initVehicleTypeTable(const QString& toVersion)
 
 bool VRDatabase::m_initInsuranceInfoTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE insurance_info ("
+            "id INTEGER PRIMARY KEY, "
+            "company_name VARCHAR(50), "
+            "account_no VARCHAR(30), "
+            "premium FLOAT DEFAULT 0.0, "
+            "next_due DATE, "
+            "period_unit INTEGER DEFAULT 1, "
+            "period_measure VARCHAR(10) DEFAULT 'Years', "
+            "notify BOOLEAN DEFAULT 1)");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            kError() << query.lastError().text();
+            return false;
+        }
+    }
     
     return true;
 }
