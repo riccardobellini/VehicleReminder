@@ -380,7 +380,26 @@ bool VRDatabase::m_initServicesLogTable(const QString& toVersion)
 
 bool VRDatabase::m_initInsurancePaymentsLogTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE insurance_payments_log ("
+            "id INTEGER PRIMARY KEY,"
+            "vehicle INTEGER,"
+            "insurance_info INTEGER,"
+            "date DATE,"
+            "cost FLOAT,"
+            "FOREIGN KEY(vehicle) REFERENCES vehicle(id) ON DELETE CASCADE ON UPDATE CASCADE,"
+            "FOREIGN KEY(insurance_info) REFERENCES insurance_info(id) ON DELETE CASCADE ON UPDATE CASCADE)");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            kError() << query.lastError().text();
+            return false;
+        }
+    }
     
     return true;
 }
