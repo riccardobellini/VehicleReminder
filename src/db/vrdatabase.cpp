@@ -262,7 +262,23 @@ bool VRDatabase::m_initVehicleTable(const QString& toVersion)
 
 bool VRDatabase::m_initDeadlineTypeTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE deadline_info ("
+            "id INTEGER PRIMARY KEY,"
+            "name VARCHAR(20) NOT NULL,"
+            "description VARCHAR(100) DEFAULT NULL,"
+            "type VARCHAR(10) DEFAULT 'Periodic')");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            kError() << query.lastError().text();
+            return false;
+        }
+    }
     
     return true;
 }
