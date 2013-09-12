@@ -227,7 +227,34 @@ bool VRDatabase::m_initInsuranceInfoTable(const QString& toVersion)
 
 bool VRDatabase::m_initVehicleTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE vehicle ("
+            "id INTEGER PRIMARY KEY, "
+            "vehicle_info INTEGER"
+            "owner INTEGER,"
+            "registration_plate VARCHAR(30) NOT NULL,"
+            "purchase_date DATE,"
+            "purchase_price FLOAT,"
+            "annotations TEXT,"
+            "odometer_km FLOAT DEFAULT 0.0,"
+            "odometer_mi FLOAT DEFAULT 0.0,"
+            "insurance_info INTEGER,"
+            "picture BLOB,"
+            "notify BOOLEAN NOT NULL,"
+            "FOREIGN KEY(owner) REFERENCES owner(id) ON DELETE CASCADE ON UPDATE CASCADE,"
+            "FOREIGN KEY(vehicle_info) REFERENCES vehicle_info(id),"
+            "FOREIGN KEY(insurance_info) REFERENCES insurance_info(id))");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            kError() << query.lastError().text();
+            return false;
+        }
+    }
     
     return true;
 }
