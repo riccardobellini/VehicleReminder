@@ -319,7 +319,31 @@ bool VRDatabase::m_initDeadlineTable(const QString& toVersion)
 
 bool VRDatabase::m_initRefuellingsLogTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE refuelling_log ("
+            "id INTEGER PRIMARY KEY,"
+            "vehicle INTEGER,"
+            "refuel_l FLOAT,"
+            "refuel_gal FLOAT,"
+            "refuel_kg FLOAT,"
+            "refuel_kwh FLOAT,"
+            "cost_per_unit FLOAT,"
+            "total_cost FLOAT,"
+            "odometer_km FLOAT,"
+            "odometer_mi FLOAT,"
+            "refuel_date DATE,"
+            "FOREIGN KEY(vehicle) REFERENCES vehicle(id))");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            kError() << query.lastError().text();
+            return false;
+        }
+    }
     
     return true;
 }
