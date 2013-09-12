@@ -286,7 +286,32 @@ bool VRDatabase::m_initDeadlineTypeTable(const QString& toVersion)
 
 bool VRDatabase::m_initDeadlineTable(const QString& toVersion)
 {
-    // TODO
+    QSqlQuery query(m_database);
+    
+    if (toVersion == LatestVersion) {
+        // need to create the latest version of the table
+        QString command = QString(
+            "CREATE TABLE deadline ("
+            "deadline_type INTEGER,"
+            "vehicle INTEGER,"
+            "period_unit INTEGER DEFAULT 1,"
+            "period_measure VARCHAR(10) DEFAULT 'Years',"
+            "every_km INTEGER,"
+            "every_mi INTEGER,"
+            "due_date DATE,"
+            "due_km INTEGER,"
+            "due_mi INTEGER,"
+            "notify BOOLEAN DEFAULT 1,"
+            "PRIMARY KEY(deadline_type, vehicle),"
+            "FOREIGN KEY(deadline_type) REFERENCES deadline_info(id) ON DELETE CASCADE ON UPDATE CASCADE,"
+            "FOREIGN KEY(vehicle) REFERENCES vehicle(id) ON DELETE CASCADE ON UPDATE CASCADE)");
+        
+        query.exec(command);
+        if (!query.isActive()) {
+            kError() << query.lastError().text();
+            return false;
+        }
+    }
     
     return true;
 }
