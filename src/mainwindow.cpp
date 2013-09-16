@@ -104,19 +104,25 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     QString version = generalCfgGroup.readEntry("version", QString());
     if (version.isEmpty()) {
         // first startup
-        d->m_database->init();
-        // TODO write the version in the config file if everything is alright
-    } else {
+        bool initSuccessful = d->m_database->init();
+        if (initSuccessful) {
+            generalCfgGroup.writeEntry("version", latestVersion);
+        }
+    } else if (version != latestVersion) {
         // migrate
         int result = KMessageBox::questionYesNo(this, i18n("Your database needs to be migrated to the latest version. "
             "Would you like to do the migration now? Answering \"No\" will close the application."), i18n("Database "
             "migration"));
         if (result == KMessageBox::Yes) {
-            d->m_database->migrate(version, latestVersion);
-            // TODO write the version in the config file if everything is alright
+            bool migrationSuccessful = d->m_database->migrate(version, latestVersion);
+            if (migrationSuccessful) {
+                generalCfgGroup.writeEntry("version", latestVersion);
+            }
         } else if (result == KMessageBox::No) {
             kapp->closeAllWindows();
         }
+    } else if (version == latestVersion) {
+        kDebug() << "Well done, found latest version of the database";
     }
     
     setupGUI(Default, "mainwindow.rc");
