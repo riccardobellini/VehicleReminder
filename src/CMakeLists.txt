@@ -2,8 +2,10 @@
 # Vehicle Reminder
 
 ADD_SUBDIRECTORY(db)
+ADD_SUBDIRECTORY(structures)
 
 INCLUDE_DIRECTORIES(db)
+INCLUDE_DIRECTORIES(structures)
 
 SET(VR_SRCS
     addprofiledialog.cpp
