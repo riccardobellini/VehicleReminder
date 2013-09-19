@@ -19,10 +19,35 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
+// Qt includes
+#include <qstring.h>
+#include <QDate>
+#include <qpixmap.h>
+
 
 namespace structures
 {
-    // TODO
+    /**
+     * \struct structures::Profile
+     * \brief This struct represents a profile (a user) in the application
+     */
+    struct Profile {
+        // WARNING omit id temporarily
+        QString firstName;
+        QString lastName;
+        QDate birthDate;
+        QString ssn;
+        QPixmap picture;
+        QString licenseNumber;
+        QDate issuingDate;
+        QDate licenseExpiryDate;
+        int licenseValidityYears;
+        QString otherNotes;
+        bool notify;
+        
+        /// Overloading equality operator
+        bool operator==(const Profile & other);
+    };
 }
 
 #endif // PROFILE_H

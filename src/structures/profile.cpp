@@ -16,10 +16,18 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+// Vehicle Reminder includes
 #include "profile.h"
 
 
 namespace structures
 {
-    // TODO
+    // Overloading equality operator
+    bool Profile::operator==(const Profile & other)
+    {
+        // checking equality of first and last names and ssn should be enough 
+        return this->firstName == other.firstName &&
+            this->lastName == other.lastName &&
+            this->ssn == other.ssn;
+    }
 }
