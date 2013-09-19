@@ -29,6 +29,8 @@
 #include "ui_addprofilewidget.h"
 
 
+using structures::Profile;
+
 AddProfileDialog::AddProfileDialog(QWidget* parent): KDialog(parent)
 {
     m_widget = new AddProfileWidget;
@@ -37,6 +39,12 @@ AddProfileDialog::AddProfileDialog(QWidget* parent): KDialog(parent)
     setButtons(KDialog::Ok | KDialog::Cancel);
     
     setMainWidget(m_widget);
+}
+
+
+structures::Profile AddProfileDialog::getProfile() const
+{
+    return m_widget->constructProfile();
 }
 
 
@@ -95,9 +103,31 @@ void AddProfileWidget::resetFields()
 }
 
 
+Profile AddProfileWidget::constructProfile() const
+{
+    Profile result;
+    
+    result.firstName = ui->firstNameLineEdit->text();
+    result.lastName = ui->secondNameLineEdit->text();
+    result.birthDate = ui->birthDateEdit->date();
+    result.ssn = ui->ssnLineEdit->text();
+    result.picture = ui->pictureToolButton->icon().pixmap(ui->pictureToolButton->size()); // FIXME
+    result.licenseNumber = ui->licenseNumberLineEdit->text();
+    result.issuingDate = ui->issuingDateEdit->date();
+    result.licenseExpiryDate = ui->expirationDateEdit->date();
+    result.licenseValidityYears = ui->validityYearsNumInput->value();
+    result.otherNotes = ui->otherNotesTextEdit->toPlainText();
+    result.notify = ui->notifyCheckBox->isChecked();
+    
+    return result;
+}
+
+
 void AddProfileWidget::loadPicture()
 {
     QString imagePath = KFileDialog::getOpenFileName(KUrl(QDir::homePath()), "image/png image/jpeg", this);
+    
+    // TODO manipulate image
 }
 
 

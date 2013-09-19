@@ -37,6 +37,7 @@
 #include "mainwindow.h"
 #include "vrdatabase.h"
 #include "addprofiledialog.h"
+#include "profile.h"
 
 // Uis includes
 #include "ui_mainwidget.h"
@@ -57,6 +58,9 @@ public:
     
     AddProfileDialog *m_addProfileDialog;
 };
+
+
+using structures::Profile;
 
 MainWindow::MainWindow() : d(new MainWindowPrivate)
 {
@@ -137,9 +141,11 @@ void MainWindow::addProfile()
     } else {
         d->m_addProfileDialog->reset();
     }
-    d->m_addProfileDialog->show();
-    
-    // TODO
+    int result = d->m_addProfileDialog->exec();
+    if (result == KDialog::Accepted) {
+        Profile newProfile = d->m_addProfileDialog->getProfile();
+        // TODO insert profile into the db
+    }
 }
 
 

@@ -23,6 +23,9 @@
 // KDE includes
 #include <kdialog.h>
 
+// Vehicle Reminder includes
+#include "profile.h"
+
 
 class AddProfileWidget;
 
@@ -35,6 +38,8 @@ class AddProfileDialog : public KDialog
 {
 public:
     explicit AddProfileDialog(QWidget *parent = 0);
+    
+    structures::Profile getProfile() const;
     
     void reset();
     
@@ -50,6 +55,8 @@ public:
     explicit AddProfileWidget(QWidget *parent = 0);
     
     void resetFields();
+    
+    structures::Profile constructProfile() const;
     
     ~AddProfileWidget();
     
