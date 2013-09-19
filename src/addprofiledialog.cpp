@@ -71,6 +71,8 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     
     ui->validityYearsNumInput->setRange(0, 20);
     
+    ui->notifyCheckBox->setChecked(false);
+    
     // connections
     connect(ui->pictureToolButton, SIGNAL(pressed()), this, SLOT(loadPicture()));
 }
@@ -87,6 +89,7 @@ void AddProfileWidget::resetFields()
     ui->issuingDateEdit->setDate(QDate::currentDate());
     ui->expirationDateEdit->setDate(QDate::currentDate());
     ui->validityYearsNumInput->setValue(0);
+    ui->notifyCheckBox->setChecked(false);
     ui->pictureToolButton->setIcon(QIcon());
     ui->otherNotesTextEdit->clear();
 }
