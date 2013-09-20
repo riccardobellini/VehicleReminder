@@ -131,7 +131,19 @@ void AddProfileWidget::loadPicture()
 {
     QString imagePath = KFileDialog::getOpenFileName(KUrl(QDir::homePath()), "image/png image/jpeg image/bmp image/gif", this);
     
-    // TODO manipulate image
+    if (imagePath.isEmpty()) {
+        return;
+    }
+    
+    QPixmap profilePicture(imagePath);
+    // display the picture in the label
+    QSize labelSize = ui->picturePreviewLabel->size();
+    // scale fast, smooth scaling not needed
+    profilePicture = profilePicture.scaled(labelSize, Qt::KeepAspectRatio, Qt::FastTransformation);
+    ui->picturePreviewLabel->setPixmap(profilePicture);
+    
+    // modify the text of the button
+    ui->picturePushButton->setText(i18n("Change..."));
 }
 
 
