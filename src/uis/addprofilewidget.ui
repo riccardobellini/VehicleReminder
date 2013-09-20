@@ -49,17 +49,17 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="secondNameLabel">
+         <widget class="QLabel" name="lastNameLabel">
           <property name="text">
-           <string>&amp;Second name:</string>
+           <string>La&amp;st name:</string>
           </property>
           <property name="buddy">
-           <cstring>secondNameLineEdit</cstring>
+           <cstring>lastNameLineEdit</cstring>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="KLineEdit" name="secondNameLineEdit">
+         <widget class="KLineEdit" name="lastNameLineEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -359,7 +359,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>firstNameLineEdit</tabstop>
-  <tabstop>secondNameLineEdit</tabstop>
+  <tabstop>lastNameLineEdit</tabstop>
   <tabstop>ssnLineEdit</tabstop>
   <tabstop>licenseNumberLineEdit</tabstop>
   <tabstop>validityYearsNumInput</tabstop>

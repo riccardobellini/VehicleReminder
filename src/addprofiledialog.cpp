@@ -90,7 +90,7 @@ void AddProfileWidget::resetFields()
 {
     // clear all input fields
     ui->firstNameLineEdit->clear();
-    ui->secondNameLineEdit->clear();
+    ui->lastNameLineEdit->clear();
     ui->birthDateEdit->setDate(QDate::currentDate());
     ui->ssnLineEdit->clear();
     ui->licenseNumberLineEdit->clear();
@@ -111,7 +111,7 @@ Profile AddProfileWidget::constructProfile() const
     Profile result;
     
     result.firstName = ui->firstNameLineEdit->text();
-    result.lastName = ui->secondNameLineEdit->text();
+    result.lastName = ui->lastNameLineEdit->text();
     result.birthDate = ui->birthDateEdit->date();
     result.ssn = ui->ssnLineEdit->text();
     // set picture only if there is a pixmap set
