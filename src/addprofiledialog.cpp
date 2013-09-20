@@ -129,7 +129,7 @@ Profile AddProfileWidget::constructProfile() const
 
 void AddProfileWidget::loadPicture()
 {
-    QString imagePath = KFileDialog::getOpenFileName(KUrl(QDir::homePath()), "image/png image/jpeg", this);
+    QString imagePath = KFileDialog::getOpenFileName(KUrl(QDir::homePath()), "image/png image/jpeg image/bmp image/gif", this);
     
     // TODO manipulate image
 }
