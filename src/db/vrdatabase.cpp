@@ -23,6 +23,8 @@
 // Qt includes
 #include <qsqlquery.h>
 #include <qsqlerror.h>
+#include <qbuffer.h>
+#include <qimagewriter.h>
 
 // Vehicle Reminder includes
 #include "vrdatabase.h"
@@ -109,7 +111,15 @@ bool VRDatabase::insertNewProfile(const Profile& profile)
     insertQuery.bindValue(1, profile.lastName);
     insertQuery.bindValue(2, profile.birthDate);
     insertQuery.bindValue(3, profile.ssn);
-    insertQuery.bindValue(4, profile.picture);
+    // prepare insertion of picture
+    QByteArray byteArray;
+    // convert pixmap to image
+    QImage profileImage = profile.picture.toImage();
+    QBuffer buffer;
+    QImageWriter imageWriter(&buffer, "PNG");
+    imageWriter.write(profileImage);
+    byteArray.append(buffer.data());
+    insertQuery.bindValue(4, byteArray);
     insertQuery.bindValue(5, profile.licenseNumber);
     insertQuery.bindValue(6, profile.issuingDate);
     insertQuery.bindValue(7, profile.licenseExpiryDate);
