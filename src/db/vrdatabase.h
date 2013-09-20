@@ -24,6 +24,9 @@
 #include <qobject.h>
 #include <qsqldatabase.h>
 
+// Vehicle Reminder includes
+#include "profile.h"
+
 
 class QSqlDatabase;
 
@@ -36,6 +39,8 @@ public:
     
     bool init();
     bool migrate(const QString &from, const QString &to);
+    
+    bool insertNewProfile(const structures::Profile &profile);
     
     static const QString LatestVersion;
     

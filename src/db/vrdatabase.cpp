@@ -28,6 +28,9 @@
 #include "vrdatabase.h"
 
 
+using structures::Profile;
+
+
 const QString VRDatabase::LatestVersion = "0.1";
 
 
@@ -89,6 +92,38 @@ bool VRDatabase::init()
 bool VRDatabase::migrate(const QString& from, const QString& to)
 {
     // TODO
+    
+    return true;
+}
+
+
+bool VRDatabase::insertNewProfile(const Profile& profile)
+{
+    QSqlQuery insertQuery(m_database);
+    
+    insertQuery.prepare("INSERT INTO profile (first_name, last_name, birthdate, ssn, picture, "
+        "license_number, issuing_date, license_expiry, license_validity_years, other_notes, notify) "
+        "VALUES (:first_name, :last_name, :birthdate, :ssn, :picture, :license_number, :issuing_date, "
+        ":license_expiry, :license_validity_years, :other_notes, :notify)");
+    insertQuery.bindValue(0, profile.firstName);
+    insertQuery.bindValue(1, profile.lastName);
+    insertQuery.bindValue(2, profile.birthDate);
+    insertQuery.bindValue(3, profile.ssn);
+    insertQuery.bindValue(4, profile.picture);
+    insertQuery.bindValue(5, profile.licenseNumber);
+    insertQuery.bindValue(6, profile.issuingDate);
+    insertQuery.bindValue(7, profile.licenseExpiryDate);
+    insertQuery.bindValue(8, profile.licenseValidityYears);
+    insertQuery.bindValue(9, profile.otherNotes);
+    insertQuery.bindValue(10, profile.notify);
+    
+    // FIXME check for empty values?
+    
+    insertQuery.exec();
+    if (!insertQuery.isActive()) {
+        kError() << insertQuery.lastError().text();
+        return false;
+    }
     
     return true;
 }

@@ -144,7 +144,7 @@ void MainWindow::addProfile()
     int result = d->m_addProfileDialog->exec();
     if (result == KDialog::Accepted) {
         Profile newProfile = d->m_addProfileDialog->getProfile();
-        // TODO insert profile into the db
+        d->m_database->insertNewProfile(newProfile);
     }
 }
 
