@@ -65,6 +65,8 @@ public Q_SLOTS:
     
 private:
     Ui::AddProfile *ui;
+    
+    QPixmap m_currentProfilePicture;
 };
 
 #endif // ADDPROFILEDIALOG_H

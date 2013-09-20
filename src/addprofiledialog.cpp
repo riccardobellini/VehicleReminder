@@ -100,6 +100,9 @@ void AddProfileWidget::resetFields()
     ui->notifyCheckBox->setChecked(false);
     ui->picturePushButton->setText(i18n("Choose..."));
     ui->otherNotesTextEdit->clear();
+    
+    // reset profile picture
+    m_currentProfilePicture = QPixmap();
 }
 
 
@@ -111,10 +114,9 @@ Profile AddProfileWidget::constructProfile() const
     result.lastName = ui->secondNameLineEdit->text();
     result.birthDate = ui->birthDateEdit->date();
     result.ssn = ui->ssnLineEdit->text();
-    const QPixmap *picture = ui->picturePreviewLabel->pixmap();
-    // set picture only if there is a pixmap set in the label
-    if (picture) {
-        result.picture = *picture;
+    // set picture only if there is a pixmap set
+    if (!m_currentProfilePicture.isNull()) {
+        result.picture = m_currentProfilePicture;
     }
     result.licenseNumber = ui->licenseNumberLineEdit->text();
     result.issuingDate = ui->issuingDateEdit->date();
@@ -136,6 +138,8 @@ void AddProfileWidget::loadPicture()
     }
     
     QPixmap profilePicture(imagePath);
+    // save picture at original resolution
+    m_currentProfilePicture = profilePicture;
     // display the picture in the label
     QSize labelSize = ui->picturePreviewLabel->size();
     // scale fast, smooth scaling not needed
