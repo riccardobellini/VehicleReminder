@@ -37,6 +37,7 @@
 #include "mainwindow.h"
 #include "vrdatabase.h"
 #include "addprofiledialog.h"
+#include "profilemanagerwidget.h"
 #include "profile.h"
 
 // Uis includes
@@ -57,6 +58,8 @@ public:
     VRDatabase *m_database;
     
     AddProfileDialog *m_addProfileDialog;
+    
+    ProfileManagerWidget *m_profileManagerWidget;
 };
 
 
@@ -73,7 +76,6 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     d->m_mainLayout->setContentsMargins(0, 0, 0, 0);
     d->m_mainLayout->addWidget(d->ui.dockWidget, 1);
     d->m_mainStackedWidget = new QStackedWidget(area);
-    d->m_mainStackedWidget->addWidget(new QWidget(this));
     
     d->m_addProfileDialog = 0;
 
@@ -129,6 +131,8 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
         kDebug() << "Well done, found latest version of the database";
     }
     
+    m_setupContentsList();
+    
     setupGUI(Default, "mainwindow.rc");
 }
 
@@ -177,4 +181,19 @@ void MainWindow::m_setupActions()
     
     KAction *quitAction = KStandardAction::quit(kapp, SLOT(closeAllWindows()), this);
     actionCollection()->addAction("quit", quitAction);
+}
+
+
+void MainWindow::m_setupContentsList()
+{
+    // add element to the main list
+    QListWidgetItem *profileManagerItem = new QListWidgetItem;
+    profileManagerItem->setText(i18n("Profile manager"));
+    profileManagerItem->setStatusTip(i18n("Click to review and edit profiles"));
+    profileManagerItem->setToolTip(i18n("Review and edit profiles"));
+    d->ui.klistwidget->addItem(profileManagerItem);
+    d->m_profileManagerWidget = new ProfileManagerWidget;
+    d->m_mainStackedWidget->addWidget(d->m_profileManagerWidget);
+    d->m_profileManagerWidget->show();
+    // TODO connect signals and slots for activation of different widgets
 }

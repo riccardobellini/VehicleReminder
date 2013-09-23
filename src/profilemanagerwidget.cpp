@@ -20,8 +20,14 @@
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
 
+// Uis includes
+#include "ui_profilemanagerwidget.h"
 
-ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent)
+
+ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent),
+    ui(new Ui::ProfileManager)
 {
-    // TODO
+    ui->setupUi(this);
+    
+    // TODO set editors
 }

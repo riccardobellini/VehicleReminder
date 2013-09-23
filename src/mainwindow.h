@@ -38,6 +38,7 @@ public Q_SLOTS:
     
 private:
     void m_setupActions();
+    void m_setupContentsList();
     // private class for view elements
     // code inspired from Skrooge base gui
     MainWindowPrivate* const d;
