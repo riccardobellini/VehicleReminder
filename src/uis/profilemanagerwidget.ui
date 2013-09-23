@@ -6,139 +6,178 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>553</height>
+    <width>838</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Profile Manager</string>
   </property>
-  <widget class="QListView" name="profileView">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>10</y>
-     <width>551</width>
-     <height>281</height>
-    </rect>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
+   <property name="spacing">
+    <number>20</number>
    </property>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>300</y>
-     <width>416</width>
-     <height>143</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QGroupBox" name="basicInfoGroupBox">
-      <property name="title">
-       <string>Basic information</string>
-      </property>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="firstNameLabel">
-         <property name="text">
-          <string>First name:</string>
-         </property>
-        </widget>
+   <item>
+    <widget class="QListView" name="profileView"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QGroupBox" name="basicInfoGroupBox">
+       <property name="title">
+        <string>Basic information</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="firstNameLabel">
+          <property name="text">
+           <string>First name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="KLineEdit" name="firstNameLineEdit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lastNameLabel">
+          <property name="text">
+           <string>Last name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="KLineEdit" name="lastNameLineEdit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="birthDateLabel">
+          <property name="text">
+           <string>Birth date:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDateEdit" name="dateEdit"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="ssnLabel">
+          <property name="text">
+           <string>SSN:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="KLineEdit" name="ssnLineEdit"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="licenseInfoGroupBox">
+       <property name="title">
+        <string>License information</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="licenseNumberLabel">
+          <property name="text">
+           <string>License number:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="KLineEdit" name="licenseNumberLineEdit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="issuingDateLabel">
+          <property name="text">
+           <string>Issuing date:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDateEdit" name="issuingDateEdit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="expiryDateLabel">
+          <property name="text">
+           <string>Expiry date:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDateEdit" name="expiryDateEdit"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="validityYearsLabel">
+          <property name="text">
+           <string>Years of validity:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="KIntNumInput" name="validityYearsNumEdit"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="otherNotesLabel">
+           <property name="text">
+            <string>Other notes:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="KLineEdit" name="firstNameLineEdit"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lastNameLabel">
-         <property name="text">
-          <string>Last name:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="KLineEdit" name="lastNameLineEdit"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="birthDateLabel">
-         <property name="text">
-          <string>Birth date:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QDateEdit" name="dateEdit"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="ssnLabel">
-         <property name="text">
-          <string>SSN:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="KLineEdit" name="ssnLineEdit"/>
+       <item>
+        <widget class="KTextEdit" name="otherNotesTextEdit"/>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="licenseInfoGroupBox">
-      <property name="title">
-       <string>License information</string>
-      </property>
-      <layout class="QFormLayout" name="formLayout_2">
-       <item row="0" column="0">
-        <widget class="QLabel" name="licenseNumberLabel">
-         <property name="text">
-          <string>License number:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="KLineEdit" name="klineedit"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="issuingDateLabel">
-         <property name="text">
-          <string>Issuing date:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QDateEdit" name="dateEdit_2"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="expiryDateLabel">
-         <property name="text">
-          <string>Expiry date:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QDateEdit" name="dateEdit_3"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="validityYearsLabel">
-         <property name="text">
-          <string>Years of validity:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="KIntNumInput" name="kintnuminput"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <customwidgets>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>ktextedit.h</header>
   </customwidget>
   <customwidget>
    <class>KIntNumInput</class>
