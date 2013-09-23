@@ -43,6 +43,7 @@ public:
     bool insertNewProfile(const structures::Profile &profile);
     
     static const QString LatestVersion;
+    static const QSize ProfilePictureSize;
     
 private:
     bool m_initProfileTable(const QString &toVersion = LatestVersion);
@@ -54,7 +55,6 @@ private:
     bool m_initDeadlineTable(const QString &toVersion = LatestVersion);
     bool m_initServicesLogTable(const QString &toVersion = LatestVersion);
     bool m_initInsurancePaymentsLogTable(const QString &toVersion = LatestVersion);
-    
     
     QSqlDatabase m_database;
     QString m_dbPath;

@@ -34,6 +34,7 @@ using structures::Profile;
 
 
 const QString VRDatabase::LatestVersion = "0.1";
+const QSize VRDatabase::ProfilePictureSize = QSize(720, 480);
 
 
 VRDatabase::VRDatabase(QObject *parent) : QObject(parent)
@@ -115,8 +116,11 @@ bool VRDatabase::insertNewProfile(const Profile& profile)
     QByteArray byteArray;
     // convert pixmap to image
     QImage profileImage = profile.picture.toImage();
-    // scale it to a suitable format
-    profileImage = profileImage.scaled(720, 480);
+    // reduce it to a suitable format
+    if (profileImage.size().width() > ProfilePictureSize.width() ||
+        profileImage.size().height() > ProfilePictureSize.height()) {
+        profileImage = profileImage.scaled(ProfilePictureSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
     QBuffer buffer;
     QImageWriter imageWriter(&buffer, "PNG");
     imageWriter.write(profileImage);
