@@ -115,6 +115,8 @@ bool VRDatabase::insertNewProfile(const Profile& profile)
     QByteArray byteArray;
     // convert pixmap to image
     QImage profileImage = profile.picture.toImage();
+    // scale it to a suitable format
+    profileImage = profileImage.scaled(720, 480);
     QBuffer buffer;
     QImageWriter imageWriter(&buffer, "PNG");
     imageWriter.write(profileImage);
