@@ -29,5 +29,25 @@ ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent),
 {
     ui->setupUi(this);
     
-    // TODO set editors
+    QDate minDate(1900, 1, 1);
+    QDate maxDate(QDate::currentDate());
+    
+    // FIXME try to use KDateComboBox rather than QDateEdit
+    ui->birthDateEdit->setDisplayFormat("dd/MM/yyyy");
+    ui->birthDateEdit->setMinimumDate(minDate);
+    ui->birthDateEdit->setMaximumDate(maxDate);
+    
+    // FIXME try to use KDateComboBox rather than QDateEdit
+    ui->issuingDateEdit->setDisplayFormat("dd/MM/yyyy");
+    ui->issuingDateEdit->setMinimumDate(minDate);
+    ui->issuingDateEdit->setMaximumDate(maxDate);
+    
+    // FIXME try to use KDateComboBox rather than QDateEdit
+    ui->expirationDateEdit->setDisplayFormat("dd/MM/yyyy");
+    ui->expirationDateEdit->setMinimumDate(maxDate);
+    ui->expirationDateEdit->setMaximumDate(maxDate.addYears(20));
+    
+    ui->validityYearsNumInput->setRange(0, 20);
+    
+    ui->notifyCheckBox->setChecked(false);
 }
