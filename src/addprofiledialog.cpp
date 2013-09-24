@@ -74,7 +74,7 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     
     // FIXME try to use KDateComboBox rather than QDateEdit
     ui->expirationDateEdit->setDisplayFormat("dd/MM/yyyy");
-    ui->expirationDateEdit->setMinimumDate(minDate);
+    ui->expirationDateEdit->setMinimumDate(maxDate);
     ui->expirationDateEdit->setMaximumDate(maxDate.addYears(20));
     
     ui->validityYearsNumInput->setRange(0, 20);
