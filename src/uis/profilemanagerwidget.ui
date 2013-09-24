@@ -98,14 +98,14 @@
          <widget class="QDateEdit" name="issuingDateEdit"/>
         </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="expiryDateLabel">
+         <widget class="QLabel" name="expirationDateLabel">
           <property name="text">
-           <string>Expiry date:</string>
+           <string>Expiration date:</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDateEdit" name="expiryDateEdit"/>
+         <widget class="QDateEdit" name="expirationDateEdit"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="validityYearsLabel">
@@ -115,7 +115,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="KIntNumInput" name="validityYearsNumEdit"/>
+         <widget class="KIntNumInput" name="validityYearsNumInput"/>
         </item>
         <item row="4" column="1">
          <widget class="QCheckBox" name="notifyCheckBox">
