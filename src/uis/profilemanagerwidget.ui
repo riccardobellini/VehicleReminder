@@ -117,6 +117,13 @@
         <item row="3" column="1">
          <widget class="KIntNumInput" name="validityYearsNumEdit"/>
         </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="notifyCheckBox">
+          <property name="text">
+           <string>Notify</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
