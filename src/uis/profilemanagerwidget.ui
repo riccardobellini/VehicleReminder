@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Profile Manager</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,1">
    <property name="spacing">
     <number>20</number>
    </property>
@@ -160,7 +160,14 @@
         </layout>
        </item>
        <item>
-        <widget class="KTextEdit" name="otherNotesTextEdit"/>
+        <widget class="KTextEdit" name="otherNotesTextEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
