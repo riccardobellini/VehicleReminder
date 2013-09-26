@@ -46,6 +46,21 @@ public:
     static const QString LatestVersion;
     static const QSize ProfilePictureSize;
     
+    enum ProfileColumnLayout {
+        Id = 0,
+        FirstName,
+        LastName,
+        BirthDate,
+        Ssn,
+        Picture,
+        LicenseNumber,
+        IssuingDate,
+        LicenseExpiry,
+        LicenseValidityYears,
+        OtherNotes,
+        Notify
+    };
+    
 private:
     bool m_initProfileTable(const QString &toVersion = LatestVersion);
     bool m_initInsuranceInfoTable(const QString &toVersion = LatestVersion);
