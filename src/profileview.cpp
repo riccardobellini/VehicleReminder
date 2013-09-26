@@ -27,7 +27,7 @@
 #include "profileview.h"
 
 
-ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent)
+ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), hashIsDirty(false)
 {
     setFocusPolicy(Qt::WheelFocus);
     setFont(KApplication::font("QListView"));
@@ -49,6 +49,13 @@ QModelIndex ProfileView::indexAt(const QPoint & point)
 void ProfileView::scrollTo(const QModelIndex & index, QAbstractItemView::ScrollHint hint)
 {
     // TODO
+}
+
+
+void ProfileView::setModel(QAbstractItemModel* model)
+{
+    QAbstractItemView::setModel(model);
+    hashIsDirty = true;
 }
 
 

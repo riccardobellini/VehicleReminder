@@ -31,6 +31,7 @@ public:
     
     virtual QModelIndex indexAt(const QPoint & point);
     virtual void scrollTo(const QModelIndex & index, QAbstractItemView::ScrollHint hint);
+    virtual void setModel(QAbstractItemModel * model);
     virtual QRect visualRect(const QModelIndex & index);
 
 protected:
@@ -41,6 +42,9 @@ protected:
     virtual int horizontalOffset();
     virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers);
 
+private:
+    mutable QHash<int, QRectF> rectForRow;
+    mutable bool hashIsDirty;
 };
 
 #endif // PROFILEVIEW_H
