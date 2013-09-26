@@ -50,6 +50,7 @@ private:
     
     mutable QHash<int, QRectF> m_rectForRow;
     mutable bool m_hashIsDirty;
+    mutable int idealHeight;
 };
 
 #endif // PROFILEVIEW_H

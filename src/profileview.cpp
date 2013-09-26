@@ -31,7 +31,8 @@
 const QSize ProfileView::ProfilePictureSize = QSize(64, 64);
 const int ProfileView::MaxTextWidth = 120;
 
-ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), m_hashIsDirty(false)
+ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), m_hashIsDirty(false),
+    idealHeight(0)
 {
     setFocusPolicy(Qt::WheelFocus);
     setFont(KApplication::font("QListView"));
@@ -165,6 +166,8 @@ void ProfileView::m_calculateRects() const
             break;
         }
         model()->fetchMore(rootIndex());
-        // TODO
     }
+    idealHeight = y + RowHeight;
+    m_hashIsDirty = false;
+    viewport()->update();
 }
