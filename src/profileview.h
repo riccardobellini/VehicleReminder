@@ -33,6 +33,9 @@ public:
     virtual void scrollTo(const QModelIndex & index, QAbstractItemView::ScrollHint hint);
     virtual void setModel(QAbstractItemModel * model);
     virtual QRect visualRect(const QModelIndex & index);
+    
+    static const QSize ProfilePictureSize;
+    static const int MaxTextWidth;
 
 protected:
     virtual QRegion visualRegionForSelection(const QItemSelection & selection);
@@ -43,8 +46,10 @@ protected:
     virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers);
 
 private:
-    mutable QHash<int, QRectF> rectForRow;
-    mutable bool hashIsDirty;
+    void m_calculateRects() const;
+    
+    mutable QHash<int, QRectF> m_rectForRow;
+    mutable bool m_hashIsDirty;
 };
 
 #endif // PROFILEVIEW_H

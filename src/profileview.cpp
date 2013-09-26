@@ -25,9 +25,13 @@
 
 // Vehicle Reminder includes
 #include "profileview.h"
+#include "vrdatabase.h"
 
 
-ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), hashIsDirty(false)
+const QSize ProfileView::ProfilePictureSize = QSize(64, 64);
+const int ProfileView::MaxTextWidth = 120;
+
+ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), m_hashIsDirty(false)
 {
     setFocusPolicy(Qt::WheelFocus);
     setFont(KApplication::font("QListView"));
@@ -55,7 +59,7 @@ void ProfileView::scrollTo(const QModelIndex & index, QAbstractItemView::ScrollH
 void ProfileView::setModel(QAbstractItemModel* model)
 {
     QAbstractItemView::setModel(model);
-    hashIsDirty = true;
+    m_hashIsDirty = true;
 }
 
 
@@ -120,4 +124,47 @@ QModelIndex ProfileView::moveCursor(QAbstractItemView::CursorAction cursorAction
     // TODO
     
     return index;
+}
+
+
+// private methods
+void ProfileView::m_calculateRects() const
+{
+    if (!m_hashIsDirty) {
+        return;
+    }
+    const int SpacingWidth = 30;
+    const int SpacingHeight = 30;
+    const int SpacingPictureText = 10;
+    QFontMetrics fontMetrics(font());
+    // row height is equal to the height of the picture, plus the spacing, plus
+    // the height of the text
+    const int RowHeight = ProfilePictureSize.height() + SpacingPictureText + fontMetrics.height();
+    const int MaxWidth = viewport()->width();
+    int minimumWidth = 0;
+    int x = 0;
+    int y = 0;
+    // use forever and fetchMore() and canFetchMore() since the model is a SQL model
+    forever {
+        for (int row = 0; row < model()->rowCount(); ++row) {
+            QModelIndex firstNameIndex = model()->index(row, VRDatabase::ProfileColumnLayout::FirstName, rootIndex());
+            QModelIndex lastNameIndex = model()->index(row, VRDatabase::ProfileColumnLayout::LastName, rootIndex());
+            QString text = model()->data(firstNameIndex).toString() + " " + model()->data(lastNameIndex).toString();
+            // if text is too long, elide it and display just MaxTextWidth
+            int textWidth = fontMetrics.width(text) <= MaxTextWidth ? fontMetrics.width(text) : MaxTextWidth;
+            if (!(x == 0 || x + textWidth < MaxWidth)) {
+                y += RowHeight + SpacingHeight;
+                x = 0;
+            }
+            else if (x != 0) {
+                x += SpacingWidth;
+            }
+            m_rectForRow[row] = QRectF(x, y, textWidth, RowHeight);
+        }
+        if (!model()->canFetchMore(rootIndex())) {
+            break;
+        }
+        model()->fetchMore(rootIndex());
+        // TODO
+    }
 }
