@@ -31,6 +31,28 @@
 
 class QSqlDatabase;
 
+// column layouts
+namespace layouts
+{
+    namespace profile
+    {
+        enum ProfileColumnLayout {
+            Id = 0,
+            FirstName,
+            LastName,
+            BirthDate,
+            Ssn,
+            Picture,
+            LicenseNumber,
+            IssuingDate,
+            LicenseExpiry,
+            LicenseValidityYears,
+            OtherNotes,
+            Notify
+        };
+    }
+}
+
 class VRDatabase : public QObject
 {
 public:
@@ -45,21 +67,6 @@ public:
     
     static const QString LatestVersion;
     static const QSize ProfilePictureSize;
-    
-    enum ProfileColumnLayout {
-        Id = 0,
-        FirstName,
-        LastName,
-        BirthDate,
-        Ssn,
-        Picture,
-        LicenseNumber,
-        IssuingDate,
-        LicenseExpiry,
-        LicenseValidityYears,
-        OtherNotes,
-        Notify
-    };
     
 private:
     bool m_initProfileTable(const QString &toVersion = LatestVersion);

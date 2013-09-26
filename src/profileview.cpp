@@ -148,8 +148,8 @@ void ProfileView::m_calculateRects() const
     // use forever and fetchMore() and canFetchMore() since the model is a SQL model
     forever {
         for (int row = 0; row < model()->rowCount(); ++row) {
-            QModelIndex firstNameIndex = model()->index(row, VRDatabase::ProfileColumnLayout::FirstName, rootIndex());
-            QModelIndex lastNameIndex = model()->index(row, VRDatabase::ProfileColumnLayout::LastName, rootIndex());
+            QModelIndex firstNameIndex = model()->index(row, layouts::profile::FirstName, rootIndex());
+            QModelIndex lastNameIndex = model()->index(row, layouts::profile::LastName, rootIndex());
             QString text = model()->data(firstNameIndex).toString() + " " + model()->data(lastNameIndex).toString();
             // if text is too long, elide it and display just MaxTextWidth
             int textWidth = fontMetrics.width(text) <= MaxTextWidth ? fontMetrics.width(text) : MaxTextWidth;
