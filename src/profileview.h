@@ -27,7 +27,7 @@
 class ProfileView : public QAbstractItemView
 {
 public:
-    ProfileView();
+    ProfileView(QWidget * parent = 0);
     
     virtual QModelIndex indexAt(const QPoint & point);
     virtual void scrollTo(const QModelIndex & index, QAbstractItemView::ScrollHint hint);

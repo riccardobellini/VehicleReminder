@@ -17,13 +17,22 @@
  *
  */
 
+// KDE includes
+#include <kapplication.h>
+
+// Qt includes
+#include <qscrollbar.h>
+
 // Vehicle Reminder includes
 #include "profileview.h"
 
 
-ProfileView::ProfileView()
+ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent)
 {
-
+    setFocusPolicy(Qt::WheelFocus);
+    setFont(KApplication::font("QListView"));
+    horizontalScrollBar()->setRange(0, 0);
+    verticalScrollBar()->setRange(0, 0);
 }
 
 
