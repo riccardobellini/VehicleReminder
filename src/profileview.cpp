@@ -53,7 +53,21 @@ QModelIndex ProfileView::indexAt(const QPoint & point)
 
 void ProfileView::scrollTo(const QModelIndex & index, QAbstractItemView::ScrollHint hint)
 {
-    // TODO
+    QRect viewRect = viewport()->rect();
+    QRect itemRect = visualRect(index);
+    
+    // no check of left and right edges of the itemRect
+    // to adjust the horizontal scroll bar
+    if (itemRect.top() < viewRect.top()) {
+        verticalScrollBar().setValue(verticalScrollBar()->value() + 
+            itemRect.top() - viewRect.top());
+    }
+    else if (itemRect.bottom() > viewRect.bottom()) {
+        verticalScrollBar()->setValue(verticalScrollBar()->value() + 
+            qMin(itemRect.bottom() - viewRect.bottom(),
+                itemRect.top() - viewRect.top()));
+    }
+    viewport()->update();
 }
 
 
