@@ -47,6 +47,7 @@ protected:
 
 private:
     void m_calculateRects() const;
+    QRectF m_viewportRectForRow(int row) const;
     
     mutable QHash<int, QRectF> m_rectForRow;
     mutable bool m_hashIsDirty;

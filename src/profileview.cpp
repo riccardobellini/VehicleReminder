@@ -67,9 +67,9 @@ void ProfileView::setModel(QAbstractItemModel* model)
 QRect ProfileView::visualRect(const QModelIndex & index)
 {
     QRect rect;
-    
-    // TODO
-    
+    if (index.isValid()) {
+        rect = m_viewportRectForRow(index.row()).toRect();
+    }
     return rect;
 }
 
@@ -170,4 +170,17 @@ void ProfileView::m_calculateRects() const
     idealHeight = y + RowHeight;
     m_hashIsDirty = false;
     viewport()->update();
+}
+
+
+QRectF ProfileView::m_viewportRectForRow(int row) const
+{
+    // calculate rects, if necessary
+    m_calculateRects();
+    QRectF rect = m_rectForRow.value(row).toRect();
+    if (!rect.isValid()) {
+        return rect;
+    }
+    return QRectF(rect.x(), rect.y() - verticalScrollBar()->value(),
+        rect.width(), rect.height());
 }
