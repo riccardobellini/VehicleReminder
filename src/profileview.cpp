@@ -92,8 +92,7 @@ void ProfileView::setSelection(const QRect & rect, QItemSelectionModel::Selectio
 
 bool ProfileView::isIndexHidden(const QModelIndex & index)
 {
-    // TODO
-    
+    // WARNING check this return
     return false;
 }
 
