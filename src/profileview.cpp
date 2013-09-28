@@ -47,11 +47,13 @@ QModelIndex ProfileView::indexAt(const QPoint & point)
     copyPoint.rx() += horizontalScrollBar()->value(); // should be 0
     copyPoint.ry() += verticalScrollBar()->value();
     m_calculateRects();
+    // NOTE iteration could probably be a bottleneck if thousands of elements are in the model,
+    // but we assume that the number of profile is never this high
     QHashIterator<int, QRectF> it(m_rectForRow);
     while (it.hasNext()) {
         it.next();
-        if (i.value().contains(point)) {
-            return model()->index(i.key(), layouts::profile::Id, rootIndex());
+        if (it.value().contains(copyPoint)) {
+            return model()->index(it.key(), layouts::profile::Id, rootIndex());
         }
     }
     return QModelIndex();
@@ -66,7 +68,7 @@ void ProfileView::scrollTo(const QModelIndex & index, QAbstractItemView::ScrollH
     // no check of left and right edges of the itemRect
     // to adjust the horizontal scroll bar
     if (itemRect.top() < viewRect.top()) {
-        verticalScrollBar().setValue(verticalScrollBar()->value() + 
+        verticalScrollBar()->setValue(verticalScrollBar()->value() + 
             itemRect.top() - viewRect.top());
     }
     else if (itemRect.bottom() > viewRect.bottom()) {
