@@ -37,6 +37,9 @@ public:
     
     static const QSize ProfilePictureSize;
     static const int MaxTextWidth;
+    static const int SpacingWidth;
+    static const int SpacingHeight;
+    static const int SpacingPictureText;
     
 protected slots:
     void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight);

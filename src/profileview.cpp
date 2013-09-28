@@ -30,6 +30,9 @@
 
 const QSize ProfileView::ProfilePictureSize = QSize(64, 64);
 const int ProfileView::MaxTextWidth = 120;
+const int ProfileView::SpacingWidth = 30;
+const int ProfileView::SpacingHeight = 30;
+const int ProfileView::SpacingPictureText = 10;
 
 ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), m_hashIsDirty(false),
     idealHeight(0)
@@ -165,9 +168,29 @@ int ProfileView::horizontalOffset()
 
 QModelIndex ProfileView::moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
 {
-    QModelIndex index;
-    
-    // TODO
+    QModelIndex index = currentIndex();
+    if (index.isValid()) {
+        if ((cursorAction == MoveLeft && index.row()) > 0 ||
+            (cursorAction == MoveRight && index.row() + 1 < model()->rowCount())) {
+                const int Offset = (cursorAction == MoveLeft ? -1 : 1);
+                index = model()->index(index.row() + Offset, index.column(), index.parent());
+        }
+        else if ((cursorAction == MoveUp && index.row()) > 0 ||
+                 (cursorAction == MoveDown && index.row() + 1 < model()->rowCount())) {
+            QFontMetrics fontMetrics(font());
+            const int RowHeight = (ProfilePictureSize.height() + SpacingPictureText + fontMetrics.height()) *
+                (cursorAction == MoveUp ? -1 : 1);
+            QRect rect = m_viewportRectForRow(index.row()).toRect();
+            QPoint point(rect.center().x(), rect.center().y() + RowHeight);
+            while (point.x() >= 0) {
+                index = indexAt(point);
+                if (index.isValid()) {
+                    break;
+                }
+                point.rx() -= fontMetrics.width("n");
+            }
+        }
+    }
     
     return index;
 }
@@ -179,9 +202,6 @@ void ProfileView::m_calculateRects() const
     if (!m_hashIsDirty) {
         return;
     }
-    const int SpacingWidth = 30;
-    const int SpacingHeight = 30;
-    const int SpacingPictureText = 10;
     QFontMetrics fontMetrics(font());
     // row height is equal to the height of the picture, plus the spacing, plus
     // the height of the text
