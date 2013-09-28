@@ -43,11 +43,18 @@ ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), m_hashIs
 
 QModelIndex ProfileView::indexAt(const QPoint & point)
 {
-    QModelIndex index;
-    
-    // TODO
-    
-    return index;
+    QPoint copyPoint(point);
+    copyPoint.rx() += horizontalScrollBar()->value(); // should be 0
+    copyPoint.ry() += verticalScrollBar()->value();
+    m_calculateRects();
+    QHashIterator<int, QRectF> it(m_rectForRow);
+    while (it.hasNext()) {
+        it.next();
+        if (i.value().contains(point)) {
+            return model()->index(i.key(), layouts::profile::Id, rootIndex());
+        }
+    }
+    return QModelIndex();
 }
 
 
