@@ -26,6 +26,7 @@
 
 class ProfileView : public QAbstractItemView
 {
+    Q_OBJECT
 public:
     ProfileView(QWidget * parent = 0);
     
@@ -36,6 +37,9 @@ public:
     
     static const QSize ProfilePictureSize;
     static const int MaxTextWidth;
+    
+protected slots:
+    void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight);
 
 protected:
     virtual QRegion visualRegionForSelection(const QItemSelection & selection);

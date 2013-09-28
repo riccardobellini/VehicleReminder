@@ -97,6 +97,15 @@ QRect ProfileView::visualRect(const QModelIndex & index)
 }
 
 
+// protected slots
+void ProfileView::dataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight)
+{
+    m_hashIsDirty = true;
+    QAbstractItemView::dataChanged(topLeft, bottomRight);
+}
+
+
+// protected methods
 QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 {
     QRegion region;
