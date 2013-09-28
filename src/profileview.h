@@ -41,6 +41,7 @@ public:
 protected slots:
     void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight);
     void rowsInserted(const QModelIndex & parent, int start, int end);
+    void rowsAboutToBeRemoved(const QModelIndex & parent, int start, int end);
 
 protected:
     virtual QRegion visualRegionForSelection(const QItemSelection & selection);

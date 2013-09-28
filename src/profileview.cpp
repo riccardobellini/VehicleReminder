@@ -112,6 +112,13 @@ void ProfileView::rowsInserted(const QModelIndex& parent, int start, int end)
 }
 
 
+void ProfileView::rowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
+{
+    m_hashIsDirty = true;
+    QAbstractItemView::rowsAboutToBeRemoved(parent, start, end);
+}
+
+
 // protected methods
 QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 {
