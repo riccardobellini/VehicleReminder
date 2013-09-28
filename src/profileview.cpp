@@ -105,6 +105,13 @@ void ProfileView::dataChanged(const QModelIndex& topLeft, const QModelIndex& bot
 }
 
 
+void ProfileView::rowsInserted(const QModelIndex& parent, int start, int end)
+{
+    m_hashIsDirty = true;
+    QAbstractItemView::rowsInserted(parent, start, end);
+}
+
+
 // protected methods
 QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 {
