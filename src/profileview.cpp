@@ -148,11 +148,7 @@ bool ProfileView::isIndexHidden(const QModelIndex & index)
 
 int ProfileView::verticalOffset()
 {
-    int result;
-    
-    // TODO
-    
-    return result;
+    return verticalScrollBar()->value();
 }
 
 
