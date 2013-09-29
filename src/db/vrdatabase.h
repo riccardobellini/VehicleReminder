@@ -31,28 +31,6 @@
 
 class QSqlDatabase;
 
-// column layouts
-namespace layouts
-{
-    namespace profile
-    {
-        enum ProfileColumnLayout {
-            Id = 0,
-            FirstName,
-            LastName,
-            BirthDate,
-            Ssn,
-            Picture,
-            LicenseNumber,
-            IssuingDate,
-            LicenseExpiry,
-            LicenseValidityYears,
-            OtherNotes,
-            Notify
-        };
-    }
-}
-
 class VRDatabase : public QObject
 {
 public:
