@@ -123,6 +123,18 @@ void ProfileView::rowsAboutToBeRemoved(const QModelIndex& parent, int start, int
 }
 
 
+void ProfileView::updateGeometries()
+{
+    QFontMetrics fontMetrics(font());
+    const int RowHeight = ProfilePictureSize.height() + SpacingPictureText + fontMetrics.height();
+    horizontalScrollBar()->setSingleStep(fontMetrics.width("n"));
+    horizontalScrollBar()->setPageStep(viewport()->width());
+    verticalScrollBar()->setSingleStep(RowHeight);
+    verticalScrollBar()->setPageStep(viewport()->height());
+    verticalScrollBar()->setRange(0, qMax(0, idealHeight - viewport()->height()));
+}
+
+
 // protected methods
 QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 {
