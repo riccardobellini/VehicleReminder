@@ -154,11 +154,7 @@ int ProfileView::verticalOffset()
 
 int ProfileView::horizontalOffset()
 {
-    int result;
-    
-    // TODO
-    
-    return result;
+    return horizontalScrollBar()->value();
 }
 
 
