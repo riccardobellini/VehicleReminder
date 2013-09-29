@@ -126,9 +126,14 @@ void ProfileView::rowsAboutToBeRemoved(const QModelIndex& parent, int start, int
 QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 {
     QRegion region;
-    
-    // TODO
-    
+    foreach (const QItemSelectionRange & range, selection) {
+        for (int row = range.top(); row <= range.bottom(); ++row) {
+            for (int column = range.left(); column <= range.right(); ++column) {
+                QModelIndex index = model()->index(row, column, rootIndex());
+                region += visualRect(index);
+            }
+        }
+    }
     return region;
 }
 
