@@ -22,6 +22,7 @@
 
 // Qt includes
 #include <qscrollbar.h>
+#include <qpainter.h>
 
 // Vehicle Reminder includes
 #include "profileview.h"
@@ -221,6 +222,30 @@ void ProfileView::scrollContentsBy(int dx, int dy)
 {
     scrollDirtyRegion(dx, dy);
     viewport()->scroll(dx, dy);
+}
+
+
+void ProfileView::paintEvent(QPaintEvent * event)
+{
+    Q_UNUSED(event);
+    QPainter painter(viewport());
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    for (int row = 0; row < model()->rowCount(rootIndex()); ++row) {
+        QModelIndex index = model()->index(row, layouts::profile::Id, rootIndex());
+        QRectF rect = m_viewportRectForRow(row);
+        if (!rect.isValid() || rect.bottom() < 0 || rect.y() > viewport()->height()) {
+            continue;
+        }
+        QStyleOptionViewItem option = viewOptions();
+        option.rect = rect.toRect();
+        if (selectionModel()->isSelected(index)) {
+            option.state |= QStyle::State_Selected;
+        }
+        if (currentIndex() == index) {
+            option.state != QStyle::State_HasFocus;
+        }
+        itemDelegate()->paint(&painter, option, index);
+    }
 }
 
 
