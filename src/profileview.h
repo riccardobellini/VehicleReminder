@@ -53,6 +53,7 @@ protected:
     virtual int verticalOffset();
     virtual int horizontalOffset();
     virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers);
+    virtual void scrollContentsBy(int dx, int dy);
 
 private:
     void m_calculateRects() const;

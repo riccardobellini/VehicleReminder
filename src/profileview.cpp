@@ -188,6 +188,13 @@ QModelIndex ProfileView::moveCursor(QAbstractItemView::CursorAction cursorAction
 }
 
 
+void ProfileView::scrollContentsBy(int dx, int dy)
+{
+    scrollDirtyRegion(dx, dy);
+    viewport()->scroll(dx, dy);
+}
+
+
 // private methods
 void ProfileView::m_calculateRects() const
 {
