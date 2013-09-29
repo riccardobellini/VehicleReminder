@@ -249,6 +249,15 @@ void ProfileView::paintEvent(QPaintEvent * event)
 }
 
 
+void ProfileView::resizeEvent(QResizeEvent * event)
+{
+    Q_UNUSED(event);
+    m_hashIsDirty = true;
+    m_calculateRects();
+    updateGeometries();
+}
+
+
 // private methods
 void ProfileView::m_calculateRects() const
 {

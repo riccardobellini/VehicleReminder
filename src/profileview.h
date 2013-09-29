@@ -55,6 +55,7 @@ protected:
     virtual QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers);
     virtual void scrollContentsBy(int dx, int dy);
     virtual void paintEvent(QPaintEvent * event);
+    virtual void resizeEvent(QResizeEvent * event);
 
 private:
     void m_calculateRects() const;
