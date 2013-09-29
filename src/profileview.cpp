@@ -23,6 +23,7 @@
 // Qt includes
 #include <qscrollbar.h>
 #include <qpainter.h>
+#include <QMouseEvent>
 
 // Vehicle Reminder includes
 #include "profileview.h"
@@ -267,6 +268,13 @@ void ProfileView::resizeEvent(QResizeEvent * event)
     m_hashIsDirty = true;
     m_calculateRects();
     updateGeometries();
+}
+
+
+void ProfileView::mousePressEvent(QMouseEvent* event)
+{
+    QAbstractItemView::mousePressEvent(event);
+    setCurrentIndex(indexAt(event->pos()));
 }
 
 

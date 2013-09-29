@@ -57,6 +57,7 @@ protected:
     virtual void scrollContentsBy(int dx, int dy);
     virtual void paintEvent(QPaintEvent * event);
     virtual void resizeEvent(QResizeEvent * event);
+    virtual void mousePressEvent(QMouseEvent * event);
 
 private:
     void m_calculateRects() const;
