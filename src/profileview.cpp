@@ -135,7 +135,31 @@ QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 
 void ProfileView::setSelection(const QRect & rect, QItemSelectionModel::SelectionFlags command)
 {
-    // TODO
+    QRect rectangle = rect.translated(horizontalScrollBar()->value(),
+        verticalScrollBar()->value()).normalized();
+    m_calculateRects();
+    // NOTE iteration could probably be a bottleneck if thousands of elements are in the model,
+    // but we assume that the number of profile is never this high
+    QHashIterator<int, QRectF> it(m_rectForRow);
+    int firstRow = model()->rowCount();
+    int lastRow = -1;
+    while (it.hasNext()) {
+        it.next();
+        if (it.value().intersects(rectangle)) {
+            firstRow = firstRow < it.key() ? firstRow : it.key();
+            lastRow = lastRow > it.key() ? lastRow : it.key();
+        }
+        if (firstRow != model()->rowCount() && lastRow != -1) {
+            QItemSelection selection(model()->index(firstRow, layouts::profile::Id, rootIndex()),
+                model()->index(lastRow, layouts::profile::Id, rootIndex()));
+            selectionModel()->select(selection, command);
+        }
+        else {
+            QModelIndex invalid;
+            QItemSelection selection(invalid, invalid);
+            selectionModel()->select(selection, command);
+        }
+    }
 }
 
 
