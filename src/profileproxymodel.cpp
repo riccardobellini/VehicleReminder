@@ -56,11 +56,9 @@ QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
 
 int ProfileProxyModel::columnCount(const QModelIndex & parent)
 {
-    int result;
-    
-    // TODO
-    
-    return result;
+    // there is just one column
+    Q_UNUSED(parent);
+    return 1;
 }
 
 
