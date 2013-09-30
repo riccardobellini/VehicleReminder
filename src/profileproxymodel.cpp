@@ -30,11 +30,8 @@ ProfileProxyModel::ProfileProxyModel(QObject * parent) : QAbstractProxyModel(par
 
 QModelIndex ProfileProxyModel::mapFromSource(const QModelIndex & sourceIndex)
 {
-    QModelIndex index;
-    
-    // TODO
-    
-    return index;
+    // since column count is equal to 1, we use just the row number
+    return index(sourceIndex.row(), 0, QModelIndex());
 }
 
 
