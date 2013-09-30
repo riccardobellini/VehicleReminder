@@ -65,6 +65,8 @@ public:
     
     bool insertNewProfile(const structures::Profile &profile);
     
+    QSqlDatabase getDatabase() const;
+    
     static const QString LatestVersion;
     static const QSize ProfilePictureSize;
     

@@ -72,7 +72,7 @@ QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
 }
 
 
-int ProfileProxyModel::columnCount(const QModelIndex & parent)
+int ProfileProxyModel::columnCount(const QModelIndex & parent) const
 {
     // there is just one column
     Q_UNUSED(parent);
@@ -80,14 +80,14 @@ int ProfileProxyModel::columnCount(const QModelIndex & parent)
 }
 
 
-int ProfileProxyModel::rowCount(const QModelIndex & parent)
+int ProfileProxyModel::rowCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent);
     return sourceModel()->rowCount();
 }
 
 
-QModelIndex ProfileProxyModel::parent(const QModelIndex & child)
+QModelIndex ProfileProxyModel::parent(const QModelIndex & child) const
 {
     // flat model, no index has a valid parent
     return QModelIndex();

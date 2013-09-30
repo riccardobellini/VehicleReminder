@@ -146,6 +146,12 @@ bool VRDatabase::insertNewProfile(const Profile& profile)
 }
 
 
+QSqlDatabase VRDatabase::getDatabase() const
+{
+    return m_database;
+}
+
+
 bool VRDatabase::m_initProfileTable(const QString& toVersion)
 {
     QSqlQuery query(m_database);
