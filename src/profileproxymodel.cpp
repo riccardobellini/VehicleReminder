@@ -96,9 +96,6 @@ QModelIndex ProfileProxyModel::parent(const QModelIndex & child)
 
 QModelIndex ProfileProxyModel::index(int row, int column, const QModelIndex & parent) const
 {
-    QModelIndex index;
-    
-    // TODO
-    
-    return index;
+    // WARNING might be wrong
+    return createIndex(row, column);
 }
