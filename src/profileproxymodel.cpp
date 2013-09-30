@@ -29,14 +29,14 @@ ProfileProxyModel::ProfileProxyModel(QObject * parent) : QAbstractProxyModel(par
 }
 
 
-QModelIndex ProfileProxyModel::mapFromSource(const QModelIndex & sourceIndex)
+QModelIndex ProfileProxyModel::mapFromSource(const QModelIndex & sourceIndex) const
 {
     // since column count is equal to 1, we use just the row number
     return index(sourceIndex.row(), 0, QModelIndex());
 }
 
 
-QModelIndex ProfileProxyModel::mapToSource(const QModelIndex & proxyIndex)
+QModelIndex ProfileProxyModel::mapToSource(const QModelIndex & proxyIndex) const
 {
     // since column count is equal to 1, map to the "id" column of the source
     QModelIndex index = sourceModel()->index(proxyIndex.row(), layouts::profile::Id, QModelIndex());
@@ -46,11 +46,29 @@ QModelIndex ProfileProxyModel::mapToSource(const QModelIndex & proxyIndex)
 
 QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
 {
-    QVariant result;
+    // check if the proxyIndex is valid
+    if (!proxyIndex.isValid()) {
+        return QVariant();
+    }
+    QModelIndex sourceIndex = mapToSource(proxyIndex);
+    // check for the role
+    if (role == Qt::DisplayRole) {
+        QModelIndex firstNameIndex = sourceIndex.sibling(sourceIndex.row(), layouts::profile::FirstName);
+        QModelIndex lastNameIndex = sourceIndex.sibling(sourceIndex.row(), layouts::profile::LastName);
+        QString firstName = firstNameIndex.data().toString();
+        QString lastName = lastNameIndex.data().toString();
+        // return firstName and lastName combined
+        QString result = firstName + " " + lastName;
+        return result;
+    }
+    if (role == PictureRole) {
+        QModelIndex pictureIndex = sourceIndex.sibling(sourceIndex.row(), layouts::profile::Picture);
+        QByteArray byteArray = pictureIndex.data().toByteArray();
+        // return the byte array, it will be up to the delegate to display the preview
+        return byteArray;
+    }
     
-    // TODO
-    
-    return result;
+    return QVariant();
 }
 
 
@@ -76,7 +94,7 @@ QModelIndex ProfileProxyModel::parent(const QModelIndex & child)
 }
 
 
-QModelIndex ProfileProxyModel::index(int row, int column, const QModelIndex & parent)
+QModelIndex ProfileProxyModel::index(int row, int column, const QModelIndex & parent) const
 {
     QModelIndex index;
     

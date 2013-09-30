@@ -35,13 +35,17 @@ class ProfileProxyModel : public QAbstractProxyModel
 public:
     explicit ProfileProxyModel(QObject * parent = 0);
     
-    virtual QModelIndex mapFromSource(const QModelIndex& sourceIndex);
-    virtual QModelIndex mapToSource(const QModelIndex& proxyIndex);
+    enum Roles {
+        PictureRole = Qt::UserRole
+    };
+    
+    virtual QModelIndex mapFromSource(const QModelIndex& sourceIndex) const;
+    virtual QModelIndex mapToSource(const QModelIndex& proxyIndex) const;
     virtual QVariant data(const QModelIndex & proxyIndex, int role = Qt::DisplayRole) const;
     virtual int columnCount(const QModelIndex& parent);
     virtual int rowCount(const QModelIndex& parent);
     virtual QModelIndex parent(const QModelIndex& child);
-    virtual QModelIndex index(int row, int column, const QModelIndex& parent);
+    virtual QModelIndex index(int row, int column, const QModelIndex& parent) const;
 };
 
 #endif // PROFILEPROXYMODEL_H
