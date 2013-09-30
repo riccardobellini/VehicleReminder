@@ -20,6 +20,7 @@
 
 // Vehicle Reminder includes
 #include "profileproxymodel.h"
+#include "vrdatabase.h"
 
 
 ProfileProxyModel::ProfileProxyModel(QObject * parent) : QAbstractProxyModel(parent)
@@ -37,10 +38,8 @@ QModelIndex ProfileProxyModel::mapFromSource(const QModelIndex & sourceIndex)
 
 QModelIndex ProfileProxyModel::mapToSource(const QModelIndex & proxyIndex)
 {
-    QModelIndex index;
-    
-    // TODO
-    
+    // since column count is equal to 1, map to the "id" column of the source
+    QModelIndex index = sourceModel()->index(proxyIndex.row(), layouts::profile::Id, QModelIndex());
     return index;
 }
 
