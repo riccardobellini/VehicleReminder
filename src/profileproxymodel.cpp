@@ -71,11 +71,8 @@ int ProfileProxyModel::rowCount(const QModelIndex & parent)
 
 QModelIndex ProfileProxyModel::parent(const QModelIndex & child)
 {
-    QModelIndex index;
-    
-    // TODO
-    
-    return index;
+    // flat model, no index has a valid parent
+    return QModelIndex();
 }
 
 
