@@ -31,6 +31,7 @@ public:
     
     virtual QModelIndex mapFromSource(const QModelIndex& sourceIndex);
     virtual QModelIndex mapToSource(const QModelIndex& proxyIndex);
+    virtual QVariant data(const QModelIndex & proxyIndex, int role = Qt::DisplayRole) const;
     virtual int columnCount(const QModelIndex& parent);
     virtual int rowCount(const QModelIndex& parent);
     virtual QModelIndex parent(const QModelIndex& child);

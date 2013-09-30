@@ -48,6 +48,16 @@ QModelIndex ProfileProxyModel::mapToSource(const QModelIndex & proxyIndex)
 }
 
 
+QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
+{
+    QVariant result;
+    
+    // TODO
+    
+    return result;
+}
+
+
 int ProfileProxyModel::columnCount(const QModelIndex & parent)
 {
     int result;
