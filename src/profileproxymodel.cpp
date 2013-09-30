@@ -64,11 +64,8 @@ int ProfileProxyModel::columnCount(const QModelIndex & parent)
 
 int ProfileProxyModel::rowCount(const QModelIndex & parent)
 {
-    int result;
-    
-    // TODO
-    
-    return result;
+    Q_UNUSED(parent);
+    return sourceModel()->rowCount();
 }
 
 
