@@ -24,6 +24,12 @@
 #include <qabstractproxymodel.h>
 
 
+/**
+ * \class ProfileProxyModel
+ * \brief This class represents a layer between the custom view and the sql table of profiles
+ * This model has a column count equal to 1, mapping of indexes to and from source is explained
+ * in relative methods
+ */
 class ProfileProxyModel : public QAbstractProxyModel
 {
 public:
