@@ -41,7 +41,8 @@ ProfileView::ProfileView(QWidget * parent) : QAbstractItemView(parent), m_hashIs
 {
     setFocusPolicy(Qt::WheelFocus);
     setFont(KApplication::font("QListView"));
-    horizontalScrollBar()->setRange(0, 0);
+    // horizontal scroll bar will never be used
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     verticalScrollBar()->setRange(0, 0);
 }
 
@@ -58,7 +59,8 @@ QModelIndex ProfileView::indexAt(const QPoint & point)
     while (it.hasNext()) {
         it.next();
         if (it.value().contains(copyPoint)) {
-            return model()->index(it.key(), layouts::profile::Id, rootIndex());
+            // model is a proxy model with only one column
+            return model()->index(it.key(), 0, rootIndex());
         }
     }
     return QModelIndex();
@@ -128,8 +130,6 @@ void ProfileView::updateGeometries()
 {
     QFontMetrics fontMetrics(font());
     const int RowHeight = ProfilePictureSize.height() + SpacingPictureText + fontMetrics.height();
-    horizontalScrollBar()->setSingleStep(fontMetrics.width("n"));
-    horizontalScrollBar()->setPageStep(viewport()->width());
     verticalScrollBar()->setSingleStep(RowHeight);
     verticalScrollBar()->setPageStep(viewport()->height());
     verticalScrollBar()->setRange(0, qMax(0, idealHeight - viewport()->height()));
@@ -154,8 +154,8 @@ QRegion ProfileView::visualRegionForSelection(const QItemSelection & selection)
 
 void ProfileView::setSelection(const QRect & rect, QItemSelectionModel::SelectionFlags command)
 {
-    QRect rectangle = rect.translated(horizontalScrollBar()->value(),
-        verticalScrollBar()->value()).normalized();
+    // 0 as a first parameter since horizontal scroll bar is always off
+    QRect rectangle = rect.translated(0, verticalScrollBar()->value()).normalized();
     m_calculateRects();
     // NOTE iteration could probably be a bottleneck if thousands of elements are in the model,
     // but we assume that the number of profile is never this high
@@ -169,8 +169,9 @@ void ProfileView::setSelection(const QRect & rect, QItemSelectionModel::Selectio
             lastRow = lastRow > it.key() ? lastRow : it.key();
         }
         if (firstRow != model()->rowCount() && lastRow != -1) {
-            QItemSelection selection(model()->index(firstRow, layouts::profile::Id, rootIndex()),
-                model()->index(lastRow, layouts::profile::Id, rootIndex()));
+            // column of indexes is 0 since the model is a proxy model with only one column
+            QItemSelection selection(model()->index(firstRow, 0, rootIndex()),
+                model()->index(lastRow, 0, rootIndex()));
             selectionModel()->select(selection, command);
         }
         else {
@@ -197,7 +198,8 @@ int ProfileView::verticalOffset()
 
 int ProfileView::horizontalOffset()
 {
-    return horizontalScrollBar()->value();
+    // horizontal scroll bar is always off, hence offset is 0
+    return 0;
 }
 
 
@@ -244,7 +246,8 @@ void ProfileView::paintEvent(QPaintEvent * event)
     QPainter painter(viewport());
     painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     for (int row = 0; row < model()->rowCount(rootIndex()); ++row) {
-        QModelIndex index = model()->index(row, layouts::profile::Id, rootIndex());
+        // model is a proxy model with only one column
+        QModelIndex index = model()->index(row, 0, rootIndex());
         QRectF rect = m_viewportRectForRow(row);
         if (!rect.isValid() || rect.bottom() < 0 || rect.y() > viewport()->height()) {
             continue;
@@ -295,9 +298,8 @@ void ProfileView::m_calculateRects() const
     // use forever and fetchMore() and canFetchMore() since the model is a SQL model
     forever {
         for (int row = 0; row < model()->rowCount(); ++row) {
-            QModelIndex firstNameIndex = model()->index(row, layouts::profile::FirstName, rootIndex());
-            QModelIndex lastNameIndex = model()->index(row, layouts::profile::LastName, rootIndex());
-            QString text = model()->data(firstNameIndex).toString() + " " + model()->data(lastNameIndex).toString();
+            QModelIndex nameIndex = model()->index(row, 0, rootIndex());
+            QString text = model()->data(nameIndex).toString();
             // if text is too long, elide it and display just MaxTextWidth
             int textWidth = fontMetrics.width(text) <= MaxTextWidth ? fontMetrics.width(text) : MaxTextWidth;
             if (!(x == 0 || x + textWidth < MaxWidth)) {
