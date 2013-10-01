@@ -20,6 +20,7 @@
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
 #include "profileproxymodel.h"
+#include "constants.h"
 
 // Uis includes
 #include "ui_profilemanagerwidget.h"
@@ -51,6 +52,11 @@ ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent),
     ui->validityYearsNumInput->setRange(0, 20);
     
     ui->notifyCheckBox->setChecked(false);
+    
+    ui->profileView->setViewMode(QListView::IconMode);
+    ui->profileView->setIconSize(ProfilePicturePreviewSize);
+    ui->profileView->setFlow(QListView::LeftToRight);
+    ui->profileView->setGridSize(ProfileViewGridSize);
 }
 
 

@@ -21,6 +21,13 @@
 // Vehicle Reminder includes
 #include "profileproxymodel.h"
 #include "vrdatabase.h"
+#include "constants.h"
+
+// Qt includes
+#include <qfontmetrics.h>
+
+// KDE includes
+#include <kapplication.h>
 
 
 ProfileProxyModel::ProfileProxyModel(QObject * parent) : QAbstractProxyModel(parent)
@@ -59,13 +66,23 @@ QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
         QString lastName = lastNameIndex.data().toString();
         // return firstName and lastName combined
         QString result = firstName + " " + lastName;
+        QFontMetrics fontMetrics = kapp->fontMetrics();
+        if (fontMetrics.width(result) > MaxProfileNameWidth) {
+            result = fontMetrics.elidedText(result, Qt::ElideMiddle, MaxProfileNameWidth);
+        }
         return result;
     }
-    if (role == PictureRole) {
+    if (role == Qt::DecorationRole) {
         QModelIndex pictureIndex = sourceIndex.sibling(sourceIndex.row(), layouts::profile::Picture);
         QByteArray byteArray = pictureIndex.data().toByteArray();
-        // return the byte array, it will be up to the delegate to display the preview
-        return byteArray;
+        QImage image;
+        if (!image.loadFromData(byteArray)) {
+            return QVariant();
+        }
+        // scale the image
+        image = image.scaled(QSize(64, 64), Qt::KeepAspectRatio, Qt::FastTransformation);
+        QVariant variant = image;
+        return variant;
     }
     
     return QVariant();
