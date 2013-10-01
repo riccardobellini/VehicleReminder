@@ -303,6 +303,8 @@ void ProfileView::m_calculateRects() const
             QString text = model()->data(nameIndex).toString();
             // if text is too long, elide it and display just MaxTextWidth
             int textWidth = fontMetrics.width(text) <= MaxTextWidth ? fontMetrics.width(text) : MaxTextWidth;
+            // if textWidth is less than the picture width, increment it
+            textWidth = qMax(textWidth, ProfilePictureSize.width());
             if (!(x == 0 || x + textWidth < MaxWidth)) {
                 // if we are going in another row, add spacing offset to both x and y
                 y += RowHeight + SpacingHeight;
