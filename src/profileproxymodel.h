@@ -44,6 +44,8 @@ public:
     virtual QVariant data(const QModelIndex & proxyIndex, int role = Qt::DisplayRole) const;
     virtual int columnCount(const QModelIndex& parent) const;
     virtual int rowCount(const QModelIndex& parent) const;
+    virtual bool canFetchMore(const QModelIndex & parent) const;
+    virtual void fetchMore(const QModelIndex & parent);
     virtual QModelIndex parent(const QModelIndex& child) const;
     virtual QModelIndex index(int row, int column, const QModelIndex& parent) const;
 };

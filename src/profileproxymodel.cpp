@@ -87,6 +87,18 @@ int ProfileProxyModel::rowCount(const QModelIndex & parent) const
 }
 
 
+bool ProfileProxyModel::canFetchMore(const QModelIndex& parent) const
+{
+    return sourceModel()->canFetchMore(mapToSource(parent));
+}
+
+
+void ProfileProxyModel::fetchMore(const QModelIndex& parent)
+{
+    sourceModel()->fetchMore(mapToSource(parent));
+}
+
+
 QModelIndex ProfileProxyModel::parent(const QModelIndex & child) const
 {
     // flat model, no index has a valid parent
