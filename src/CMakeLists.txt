@@ -10,8 +10,6 @@ INCLUDE_DIRECTORIES(structures)
 SET(VR_SRCS
     addprofiledialog.cpp
     profilemanagerwidget.cpp
-    profileview.cpp
-    profileproxymodel.cpp
     mainwindow.cpp
     main.cpp
 )
