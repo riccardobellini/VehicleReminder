@@ -293,8 +293,9 @@ void ProfileView::m_calculateRects() const
     const int RowHeight = ProfilePictureSize.height() + SpacingPictureText + fontMetrics.height();
     const int MaxWidth = viewport()->width();
     int minimumWidth = 0;
-    int x = 0;
-    int y = 0;
+    // give an initial spacing offset
+    int x = 0 + SpacingWidth;
+    int y = 0 + SpacingHeight;
     // use forever and fetchMore() and canFetchMore() since the model is a SQL model
     forever {
         for (int row = 0; row < model()->rowCount(); ++row) {
@@ -303,10 +304,12 @@ void ProfileView::m_calculateRects() const
             // if text is too long, elide it and display just MaxTextWidth
             int textWidth = fontMetrics.width(text) <= MaxTextWidth ? fontMetrics.width(text) : MaxTextWidth;
             if (!(x == 0 || x + textWidth < MaxWidth)) {
+                // if we are going in another row, add spacing offset to both x and y
                 y += RowHeight + SpacingHeight;
-                x = 0;
+                x = 0 + SpacingWidth;
             }
             else if (x != 0) {
+                // if we are not in a new row, increment just x by the spacing offset
                 x += SpacingWidth;
             }
             m_rectForRow[row] = QRectF(x, y, textWidth, RowHeight);
