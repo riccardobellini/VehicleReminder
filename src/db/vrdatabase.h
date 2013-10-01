@@ -29,6 +29,27 @@
 #include "profile.h"
 
 
+namespace layouts
+{
+    namespace profile
+    {
+        enum Columns {
+            Id = 0,
+            FirstName,
+            LastName,
+            BirthDate,
+            Ssn,
+            Picture,
+            LicenseNumber,
+            IssuingDate,
+            LicenseExpiry,
+            LicenseValidityYears,
+            OtherNotes,
+            Notify
+        };
+    }
+}
+
 class QSqlDatabase;
 
 class VRDatabase : public QObject
@@ -42,6 +63,8 @@ public:
     bool migrate(const QString &from, const QString &to);
     
     bool insertNewProfile(const structures::Profile &profile);
+    
+    QSqlDatabase getDatabase() const;
     
     static const QString LatestVersion;
     static const QSize ProfilePictureSize;

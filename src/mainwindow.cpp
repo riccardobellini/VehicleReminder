@@ -33,6 +33,7 @@
 #include <QHBoxLayout>
 #include <qsplitter.h>
 #include <qstackedwidget.h>
+#include <qsqltablemodel.h>
 
 // Vehicle Reminder includes
 #include "mainwindow.h"
@@ -40,6 +41,7 @@
 #include "addprofiledialog.h"
 #include "profilemanagerwidget.h"
 #include "profile.h"
+#include "profileproxymodel.h"
 
 // Uis includes
 #include "ui_mainwidget.h"
@@ -135,6 +137,15 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     m_setupContentsList();
     
     setupGUI(Default, "mainwindow.rc");
+    
+    QSqlTableModel *profileModel = new QSqlTableModel(this, d->m_database->getDatabase());
+    profileModel->setTable("profile");
+    profileModel->select();
+    
+    ProfileProxyModel *profileProxyModel = new ProfileProxyModel(this);
+    profileProxyModel->setSourceModel(profileModel);
+    
+    d->m_profileManagerWidget->initModel(profileProxyModel);
 }
 
 

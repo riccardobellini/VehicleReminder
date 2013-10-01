@@ -28,11 +28,14 @@ namespace Ui
 {
     class ProfileManager;
 }
+class ProfileProxyModel;
 
 class ProfileManagerWidget : public QWidget
 {
 public:
     ProfileManagerWidget(QWidget * parent = 0);
+    
+    void initModel(ProfileProxyModel * model);
 
 private:
     Ui::ProfileManager *ui;

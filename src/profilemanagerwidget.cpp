@@ -19,6 +19,7 @@
 
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
+#include "profileproxymodel.h"
 
 // Uis includes
 #include "ui_profilemanagerwidget.h"
@@ -50,4 +51,10 @@ ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent),
     ui->validityYearsNumInput->setRange(0, 20);
     
     ui->notifyCheckBox->setChecked(false);
+}
+
+
+void ProfileManagerWidget::initModel(ProfileProxyModel* model)
+{
+    ui->profileView->setModel(model);
 }
