@@ -29,6 +29,27 @@
 #include "profile.h"
 
 
+namespace layouts
+{
+    namespace profile
+    {
+        enum Columns {
+            Id = 0,
+            FirstName,
+            LastName,
+            BirthDate,
+            Ssn,
+            Picture,
+            LicenseNumber,
+            IssuingDate,
+            LicenseExpiry,
+            LicenseValidityYears,
+            OtherNotes,
+            Notify
+        };
+    }
+}
+
 class QSqlDatabase;
 
 class VRDatabase : public QObject

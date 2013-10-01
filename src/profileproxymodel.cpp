@@ -72,6 +72,13 @@ QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
 }
 
 
+Qt::ItemFlags ProfileProxyModel::flags(const QModelIndex& proxyIndex) const
+{
+    // item is not editable
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+}
+
+
 int ProfileProxyModel::columnCount(const QModelIndex & parent) const
 {
     // there is just one column

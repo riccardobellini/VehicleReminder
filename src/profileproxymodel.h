@@ -42,6 +42,7 @@ public:
     virtual QModelIndex mapFromSource(const QModelIndex& sourceIndex) const;
     virtual QModelIndex mapToSource(const QModelIndex& proxyIndex) const;
     virtual QVariant data(const QModelIndex & proxyIndex, int role = Qt::DisplayRole) const;
+    virtual Qt::ItemFlags flags(const QModelIndex & proxyIndex) const;
     virtual int columnCount(const QModelIndex& parent) const;
     virtual int rowCount(const QModelIndex& parent) const;
     virtual bool canFetchMore(const QModelIndex & parent) const;
