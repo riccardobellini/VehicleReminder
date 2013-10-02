@@ -17,6 +17,9 @@
  *
  */
 
+// Qt includes
+#include <qabstractitemmodel.h>
+
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
 #include "profileproxymodel.h"
@@ -26,8 +29,8 @@
 #include "ui_profilemanagerwidget.h"
 
 
-ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent),
-    ui(new Ui::ProfileManager)
+ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, QWidget * parent) : QWidget(parent),
+    ui(new Ui::ProfileManager), m_originalModel(originalModel), m_proxyModel(0)
 {
     ui->setupUi(this);
     
@@ -60,7 +63,10 @@ ProfileManagerWidget::ProfileManagerWidget(QWidget * parent) : QWidget(parent),
 }
 
 
-void ProfileManagerWidget::initModel(ProfileProxyModel* model)
+void ProfileManagerWidget::setProxyModel(ProfileProxyModel* model)
 {
-    ui->profileView->setModel(model);
+    if (model) {
+        ui->profileView->setModel(model);
+        m_proxyModel = model;
+    }
 }

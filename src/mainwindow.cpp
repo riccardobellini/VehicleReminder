@@ -63,6 +63,8 @@ public:
     AddProfileDialog *m_addProfileDialog;
     
     ProfileManagerWidget *m_profileManagerWidget;
+    QSqlTableModel *m_profileModel;
+    ProfileProxyModel *m_profileProxyModel;
 };
 
 
@@ -137,15 +139,6 @@ MainWindow::MainWindow() : d(new MainWindowPrivate)
     m_setupContentsList();
     
     setupGUI(Default, "mainwindow.rc");
-    
-    QSqlTableModel *profileModel = new QSqlTableModel(this, d->m_database->getDatabase());
-    profileModel->setTable("profile");
-    profileModel->select();
-    
-    ProfileProxyModel *profileProxyModel = new ProfileProxyModel(this);
-    profileProxyModel->setSourceModel(profileModel);
-    
-    d->m_profileManagerWidget->initModel(profileProxyModel);
 }
 
 
@@ -204,7 +197,17 @@ void MainWindow::m_setupContentsList()
     profileManagerItem->setStatusTip(i18n("Click to review and edit profiles"));
     profileManagerItem->setToolTip(i18n("Review and edit profiles"));
     d->ui.klistwidget->addItem(profileManagerItem);
-    d->m_profileManagerWidget = new ProfileManagerWidget;
+    
+    // initialize profile model and proxy
+    d->m_profileModel = new QSqlTableModel(this, d->m_database->getDatabase());
+    d->m_profileModel->setTable("profile");
+    d->m_profileModel->select();
+    
+    d->m_profileProxyModel = new ProfileProxyModel(this);
+    d->m_profileProxyModel->setSourceModel(d->m_profileModel);
+    
+    d->m_profileManagerWidget = new ProfileManagerWidget(d->m_profileModel);
+    d->m_profileManagerWidget->setProxyModel(d->m_profileProxyModel);
     d->m_mainStackedWidget->addWidget(d->m_profileManagerWidget);
     d->m_profileManagerWidget->show();
     // TODO connect signals and slots for activation of different widgets
