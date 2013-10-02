@@ -19,10 +19,14 @@
 
 // Qt includes
 #include <qabstractitemmodel.h>
+#include <qsqltablemodel.h>
+#include <qdatawidgetmapper.h>
+#include <qstyleditemdelegate.h>
 
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
 #include "profileproxymodel.h"
+#include "vrdatabase.h"
 #include "constants.h"
 
 // Uis includes
@@ -60,6 +64,9 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     ui->profileView->setIconSize(ProfilePicturePreviewSize);
     ui->profileView->setFlow(QListView::LeftToRight);
     ui->profileView->setGridSize(ProfileViewGridSize);
+    
+    // setup mappings with widgets
+    m_setupDataMapper();
 }
 
 
@@ -68,5 +75,47 @@ void ProfileManagerWidget::setProxyModel(ProfileProxyModel* model)
     if (model) {
         ui->profileView->setModel(model);
         m_proxyModel = model;
+        // connect signal to update data mapper
+        connect(ui->profileView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+                this, SLOT(updateDataMapperIndex(QItemSelection, QItemSelection)));
+        // load data into the mapper, if present
+        if (m_proxyModel->rowCount() > 0) {
+            ui->profileView->setCurrentIndex(m_proxyModel->index(0, 0, QModelIndex()));
+            m_dataMapper->setCurrentIndex(ui->profileView->currentIndex().row());
+        }
     }
+}
+
+
+// private slots
+void ProfileManagerWidget::updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected)
+{
+    if (selected.indexes().isEmpty()) {
+        return;
+    }
+    m_dataMapper->setCurrentIndex(selected.indexes().first().row());
+}
+
+
+// private methods
+void ProfileManagerWidget::m_setupDataMapper()
+{
+    m_dataMapper = new QDataWidgetMapper(this);
+    m_dataMapper->setOrientation(Qt::Horizontal);
+    m_dataMapper->setModel(m_originalModel);
+    // modify submit behaviour of the data mapper
+    m_dataMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
+    // no need for a relational delegate
+    m_dataMapper->setItemDelegate(new QStyledItemDelegate(m_dataMapper));
+    m_dataMapper->addMapping(ui->firstNameLineEdit, layouts::profile::FirstName);
+    m_dataMapper->addMapping(ui->lastNameLineEdit, layouts::profile::LastName);
+    m_dataMapper->addMapping(ui->birthDateEdit, layouts::profile::BirthDate);
+    m_dataMapper->addMapping(ui->ssnLineEdit, layouts::profile::Ssn);
+    m_dataMapper->addMapping(ui->licenseNumberLineEdit, layouts::profile::LicenseNumber);
+    m_dataMapper->addMapping(ui->issuingDateEdit, layouts::profile::IssuingDate);
+    m_dataMapper->addMapping(ui->expirationDateEdit, layouts::profile::LicenseExpiry);
+    m_dataMapper->addMapping(ui->validityYearsNumInput, layouts::profile::LicenseValidityYears);
+    m_dataMapper->addMapping(ui->notifyCheckBox, layouts::profile::Notify);
+    m_dataMapper->addMapping(ui->otherNotesTextEdit, layouts::profile::OtherNotes);
+    // TODO provide a way to modify data
 }

@@ -30,19 +30,29 @@ namespace Ui
 }
 class QAbstractItemModel;
 class ProfileProxyModel;
+class QItemSelection;
+class QDataWidgetMapper;
 
 class ProfileManagerWidget : public QWidget
 {
+    Q_OBJECT
 public:
     ProfileManagerWidget(QAbstractItemModel * originalModel, QWidget * parent = 0);
     
     void setProxyModel(ProfileProxyModel * model);
 
+private slots:
+    void updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected);
+    
 private:
+    void m_setupDataMapper();
+    
     Ui::ProfileManager *ui;
     
     QAbstractItemModel *m_originalModel;
     ProfileProxyModel *m_proxyModel;
+    
+    QDataWidgetMapper *m_dataMapper;
 };
 
 #endif // PROFILEMANAGERWIDGET_H
