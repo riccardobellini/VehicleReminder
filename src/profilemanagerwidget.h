@@ -42,7 +42,7 @@ public:
     void setProxyModel(ProfileProxyModel * model);
 
 private slots:
-    void updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected);
+    void m_updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected);
     
 private:
     void m_setupDataMapper();

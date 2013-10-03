@@ -77,7 +77,7 @@ void ProfileManagerWidget::setProxyModel(ProfileProxyModel* model)
         m_proxyModel = model;
         // connect signal to update data mapper
         connect(ui->profileView->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-                this, SLOT(updateDataMapperIndex(QItemSelection, QItemSelection)));
+                this, SLOT(m_updateDataMapperIndex(QItemSelection, QItemSelection)));
         // load data into the mapper, if present
         if (m_proxyModel->rowCount() > 0) {
             ui->profileView->setCurrentIndex(m_proxyModel->index(0, 0, QModelIndex()));
@@ -88,7 +88,7 @@ void ProfileManagerWidget::setProxyModel(ProfileProxyModel* model)
 
 
 // private slots
-void ProfileManagerWidget::updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected)
+void ProfileManagerWidget::m_updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected)
 {
     if (selected.indexes().isEmpty()) {
         return;
