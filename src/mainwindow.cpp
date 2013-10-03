@@ -200,6 +200,7 @@ void MainWindow::m_setupContentsList()
     
     // initialize profile model and proxy
     d->m_profileModel = new QSqlTableModel(this, d->m_database->getDatabase());
+    d->m_profileModel->setEditStrategy(QSqlTableModel::OnFieldChange);
     d->m_profileModel->setTable("profile");
     d->m_profileModel->select();
     

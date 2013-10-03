@@ -70,6 +70,19 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     ui->profileView->setGridSize(ProfileViewGridSize);
     
     ui->applyChangesPushButton->setIcon(KIcon("dialog-ok-apply"));
+    // disable the apply changes button initially
+    ui->applyChangesPushButton->setEnabled(false);
+    // and enable it if something changes
+    connect(ui->firstNameLineEdit, SIGNAL(textEdited(QString)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->lastNameLineEdit, SIGNAL(textEdited(QString)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->birthDateEdit, SIGNAL(dateChanged(QDate)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->ssnLineEdit, SIGNAL(textEdited(QString)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->licenseNumberLineEdit, SIGNAL(textEdited(QString)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->issuingDateEdit, SIGNAL(dateChanged(QDate)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->expirationDateEdit, SIGNAL(dateChanged(QDate)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->validityYearsNumInput, SIGNAL(valueChanged(int)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->notifyCheckBox, SIGNAL(toggled(bool)), SLOT(m_checkEnableApplyChangesButton()));
+    connect(ui->otherNotesTextEdit, SIGNAL(textChanged()), SLOT(m_checkEnableApplyChangesButton()));
     
     connect(ui->applyChangesPushButton, SIGNAL(pressed()), SLOT(m_applyChanges()));
     
@@ -90,6 +103,7 @@ void ProfileManagerWidget::setProxyModel(ProfileProxyModel* model)
         if (m_proxyModel->rowCount() > 0) {
             ui->profileView->setCurrentIndex(m_proxyModel->index(0, 0, QModelIndex()));
             m_dataMapper->setCurrentIndex(ui->profileView->currentIndex().row());
+            ui->applyChangesPushButton->setEnabled(false);
         }
     }
 }
@@ -102,6 +116,7 @@ void ProfileManagerWidget::m_updateDataMapperIndex(const QItemSelection & select
         return;
     }
     m_dataMapper->setCurrentIndex(selected.indexes().first().row());
+    ui->applyChangesPushButton->setEnabled(false);
 }
 
 
@@ -113,6 +128,13 @@ void ProfileManagerWidget::m_applyChanges()
         QSqlTableModel *model = qobject_cast<QSqlTableModel *>(m_originalModel);
         kError() << model->lastError().text();
     }
+}
+
+
+void ProfileManagerWidget::m_checkEnableApplyChangesButton()
+{
+    bool toBeEnabled = !ui->firstNameLineEdit->text().isEmpty() && !ui->lastNameLineEdit->text().isEmpty();
+    ui->applyChangesPushButton->setEnabled(toBeEnabled);
 }
 
 
@@ -136,5 +158,4 @@ void ProfileManagerWidget::m_setupDataMapper()
     m_dataMapper->addMapping(ui->validityYearsNumInput, layouts::profile::LicenseValidityYears);
     m_dataMapper->addMapping(ui->notifyCheckBox, layouts::profile::Notify);
     m_dataMapper->addMapping(ui->otherNotesTextEdit, layouts::profile::OtherNotes);
-    // TODO provide a way to modify data
 }
