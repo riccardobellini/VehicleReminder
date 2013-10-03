@@ -43,6 +43,7 @@ public:
 
 private slots:
     void m_updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected);
+    void m_applyChanges();
     
 private:
     void m_setupDataMapper();

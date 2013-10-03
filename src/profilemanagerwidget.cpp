@@ -17,9 +17,13 @@
  *
  */
 
+// KDE includes
+#include <kdebug.h>
+
 // Qt includes
 #include <qabstractitemmodel.h>
 #include <qsqltablemodel.h>
+#include <qsqlerror.h>
 #include <qdatawidgetmapper.h>
 #include <qstyleditemdelegate.h>
 
@@ -66,7 +70,9 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     ui->profileView->setGridSize(ProfileViewGridSize);
     
     ui->applyChangesPushButton->setIcon(KIcon("dialog-ok-apply"));
-
+    
+    connect(ui->applyChangesPushButton, SIGNAL(pressed()), SLOT(m_applyChanges()));
+    
     // setup mappings with widgets
     m_setupDataMapper();
 }
@@ -96,6 +102,17 @@ void ProfileManagerWidget::m_updateDataMapperIndex(const QItemSelection & select
         return;
     }
     m_dataMapper->setCurrentIndex(selected.indexes().first().row());
+}
+
+
+void ProfileManagerWidget::m_applyChanges()
+{
+    // let the mapper submit data
+    if (!m_dataMapper->submit()) {
+        // debug the error
+        QSqlTableModel *model = qobject_cast<QSqlTableModel *>(m_originalModel);
+        kError() << model->lastError().text();
+    }
 }
 
 
