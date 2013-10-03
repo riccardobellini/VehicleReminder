@@ -65,6 +65,8 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     ui->profileView->setFlow(QListView::LeftToRight);
     ui->profileView->setGridSize(ProfileViewGridSize);
     
+    ui->applyChangesPushButton->setIcon(KIcon("dialog-ok-apply"));
+
     // setup mappings with widgets
     m_setupDataMapper();
 }
