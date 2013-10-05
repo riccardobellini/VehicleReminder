@@ -123,11 +123,13 @@ void ProfileManagerWidget::m_updateDataMapperIndex(const QItemSelection & select
 void ProfileManagerWidget::m_applyChanges()
 {
     // let the mapper submit data
-    if (!m_dataMapper->submit()) {
-        // debug the error
+    bool submitResult = m_dataMapper->submit();
+    if (!submitResult) {
         QSqlTableModel *model = qobject_cast<QSqlTableModel *>(m_originalModel);
         kError() << model->lastError().text();
     }
+    // FIXME
+    m_dataMapper->setCurrentIndex(0);
 }
 
 
