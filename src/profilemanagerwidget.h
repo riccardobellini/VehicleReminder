@@ -32,6 +32,8 @@ class QAbstractItemModel;
 class ProfileProxyModel;
 class QItemSelection;
 class QDataWidgetMapper;
+class QTimer;
+class KMessageWidget;
 
 class ProfileManagerWidget : public QWidget
 {
@@ -55,6 +57,9 @@ private:
     ProfileProxyModel *m_proxyModel;
     
     QDataWidgetMapper *m_dataMapper;
+    
+    KMessageWidget *m_messageWidget;
+    QTimer *m_messageWidgetHidingTimer;
 };
 
 #endif // PROFILEMANAGERWIDGET_H

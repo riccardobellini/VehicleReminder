@@ -18,6 +18,7 @@
  */
 
 // KDE includes
+#include <kmessagewidget.h>
 #include <kdebug.h>
 
 // Qt includes
@@ -26,6 +27,7 @@
 #include <qsqlerror.h>
 #include <qdatawidgetmapper.h>
 #include <qstyleditemdelegate.h>
+#include <qtimer.h>
 
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
@@ -49,20 +51,36 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     ui->birthDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->birthDateEdit->setMinimumDate(minDate);
     ui->birthDateEdit->setMaximumDate(maxDate);
+    ui->birthDateEdit->setDate(maxDate.addYears(-18));
     
     // FIXME try to use KDateComboBox rather than QDateEdit
     ui->issuingDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->issuingDateEdit->setMinimumDate(minDate);
     ui->issuingDateEdit->setMaximumDate(maxDate);
+    ui->issuingDateEdit->setDate(minDate);
     
     // FIXME try to use KDateComboBox rather than QDateEdit
     ui->expirationDateEdit->setDisplayFormat("dd/MM/yyyy");
-    ui->expirationDateEdit->setMinimumDate(maxDate);
+    ui->expirationDateEdit->setMinimumDate(minDate);
     ui->expirationDateEdit->setMaximumDate(maxDate.addYears(20));
+    ui->expirationDateEdit->setDate(maxDate);
     
     ui->validityYearsNumInput->setRange(0, 20);
     
     ui->notifyCheckBox->setChecked(false);
+    
+    // insert message widget in the profile manager
+    m_messageWidget = new KMessageWidget;
+    m_messageWidget->setCloseButtonVisible(true);
+    m_messageWidget->setMessageType(KMessageWidget::Warning);
+    m_messageWidget->hide();
+    layout()->addWidget(m_messageWidget);
+    
+    // setup timer for auto hiding message widget if not closed
+    m_messageWidgetHidingTimer = new QTimer(this);
+    m_messageWidgetHidingTimer->setSingleShot(true);
+    m_messageWidgetHidingTimer->setInterval(4000);
+    connect(m_messageWidgetHidingTimer, SIGNAL(timeout()), m_messageWidget, SLOT(animatedHide()));
     
     ui->profileView->setViewMode(QListView::IconMode);
     ui->profileView->setIconSize(ProfilePicturePreviewSize);
@@ -122,6 +140,13 @@ void ProfileManagerWidget::m_updateDataMapperIndex(const QItemSelection & select
 
 void ProfileManagerWidget::m_applyChanges()
 {
+    if (ui->expirationDateEdit->date() < QDate::currentDate()) {
+        m_messageWidget->setText(i18n("Expiration date must not precede current date"));
+        m_messageWidget->animatedShow();
+        // start the timer
+        m_messageWidgetHidingTimer->start();
+        return;
+    }
     // let the mapper submit data
     bool submitResult = m_dataMapper->submit();
     if (!submitResult) {
