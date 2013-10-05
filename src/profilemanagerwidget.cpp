@@ -135,7 +135,20 @@ void ProfileManagerWidget::m_applyChanges()
 
 void ProfileManagerWidget::m_checkEnableApplyChangesButton()
 {
-    bool toBeEnabled = !ui->firstNameLineEdit->text().isEmpty() && !ui->lastNameLineEdit->text().isEmpty();
+    // do not enable apply changes button if either first/last name or license number line edits
+    // have empty text
+    bool toBeEnabled = !ui->firstNameLineEdit->text().isEmpty() && !ui->lastNameLineEdit->text().isEmpty() &&
+        !ui->licenseNumberLineEdit->text().isEmpty();
+    // show some nice placeholder text when no text is present
+    if (!ui->firstNameLineEdit->text().isEmpty()) {
+        ui->firstNameLineEdit->setPlaceholderText(i18n("Enter your first name..."));
+    }
+    if (!ui->lastNameLineEdit->text().isEmpty()) {
+        ui->lastNameLineEdit->setPlaceholderText(i18n("Enter your last name..."));
+    }
+    if (!ui->licenseNumberLineEdit->text().isEmpty()) {
+        ui->licenseNumberLineEdit->setPlaceholderText(i18n("Enter your license number..."));
+    }
     ui->applyChangesPushButton->setEnabled(toBeEnabled);
 }
 
