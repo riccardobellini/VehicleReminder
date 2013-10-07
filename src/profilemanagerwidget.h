@@ -48,6 +48,8 @@ private slots:
     void m_applyChanges();
     void m_checkEnableApplyChangesButton();
     
+    void m_contextMenuRequested(const QPoint & pos);
+    
 private:
     void m_setupDataMapper();
     

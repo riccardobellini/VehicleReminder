@@ -104,6 +104,10 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     
     connect(ui->applyChangesPushButton, SIGNAL(pressed()), SLOT(m_applyChanges()));
     
+    // connect request of context menu
+    ui->profileView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->profileView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(m_contextMenuRequested(QPoint)));
+    
     // setup mappings with widgets
     m_setupDataMapper();
 }
@@ -175,6 +179,12 @@ void ProfileManagerWidget::m_checkEnableApplyChangesButton()
         ui->licenseNumberLineEdit->setPlaceholderText(i18n("Enter your license number..."));
     }
     ui->applyChangesPushButton->setEnabled(toBeEnabled);
+}
+
+
+void ProfileManagerWidget::m_contextMenuRequested(const QPoint & pos)
+{
+    QModelIndex index = ui->profileView->indexAt(pos);    
 }
 
 
