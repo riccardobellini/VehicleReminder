@@ -255,7 +255,7 @@ void ProfileManagerWidget::m_setupContextMenu()
     
     m_viewPictureAction = new KAction(this);
     m_viewPictureAction->setText(i18n("View picture"));
-    m_viewPictureAction->setIcon(KIcon("zoom-in"));
+    m_viewPictureAction->setIcon(KIcon("zoom-original"));
     
     m_contextMenu->addAction(m_viewPictureAction);
     m_contextMenu->addAction(m_changePictureAction);
