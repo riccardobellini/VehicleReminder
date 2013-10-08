@@ -42,7 +42,7 @@
 
 
 ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, QWidget * parent) : QWidget(parent),
-    ui(new Ui::ProfileManager), m_originalModel(originalModel), m_proxyModel(0), m_contextMenu(0)
+    ui(new Ui::ProfileManager), m_originalModel(originalModel), m_proxyModel(0), m_contextMenu(0), m_pictureLabel(0)
 {
     ui->setupUi(this);
     
@@ -115,6 +115,15 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     
     // setup context menu for the list view
     m_setupContextMenu();
+}
+
+
+ProfileManagerWidget::~ProfileManagerWidget()
+{
+    // delete picture label, which does not have a parent widget
+    if (m_pictureLabel) {
+        m_pictureLabel->deleteLater();
+    }
 }
 
 
@@ -210,7 +219,33 @@ void ProfileManagerWidget::m_contextMenuRequested(const QPoint & pos)
 
 void ProfileManagerWidget::m_viewPicture()
 {
-    // TODO
+    QModelIndexList indexes = ui->profileView->selectionModel()->selectedIndexes();
+    
+    if (indexes.isEmpty()) {
+        // no indexes selected, return
+        kError() << "No index selected";
+        return;
+    }
+    
+    // initialize picture label, if necessary
+    if (!m_pictureLabel) {
+        m_pictureLabel = new QLabel;
+        // FIXME window flags?
+    }
+    
+    // consider just the first selected index
+    QModelIndex index = indexes.first();
+    QVariant variant = index.data(ProfileProxyModel::PictureRole);
+    QImage picture = variant.value<QImage>();
+    
+    QPixmap picturePixmap = QPixmap::fromImage(picture);
+    if (picturePixmap.isNull()) {
+        kError() << "Pixmap is null";
+        return;
+    }
+    m_pictureLabel->setPixmap(picturePixmap);
+    m_pictureLabel->adjustSize();
+    m_pictureLabel->show();
 }
 
 

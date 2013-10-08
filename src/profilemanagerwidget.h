@@ -33,6 +33,7 @@ class ProfileProxyModel;
 class QItemSelection;
 class QDataWidgetMapper;
 class QTimer;
+class QLabel;
 class KMessageWidget;
 class KMenu;
 class KAction;
@@ -42,6 +43,8 @@ class ProfileManagerWidget : public QWidget
     Q_OBJECT
 public:
     ProfileManagerWidget(QAbstractItemModel * originalModel, QWidget * parent = 0);
+    
+    virtual ~ProfileManagerWidget();
     
     void setProxyModel(ProfileProxyModel * model);
 
@@ -73,6 +76,8 @@ private:
     KMenu *m_contextMenu;
     KAction *m_changePictureAction;
     KAction *m_viewPictureAction;
+    
+    QLabel *m_pictureLabel;
 };
 
 #endif // PROFILEMANAGERWIDGET_H
