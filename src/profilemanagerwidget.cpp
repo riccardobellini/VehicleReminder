@@ -252,7 +252,8 @@ void ProfileManagerWidget::m_viewPicture()
         m_pictureLabel = new QLabel;
         // make the widget close when escape key is pressed
         m_pictureLabel->installEventFilter(this);
-        // FIXME window flags?
+        m_pictureLabel->setWindowFlags(Qt::FramelessWindowHint);
+        m_pictureLabel->setWindowModality(Qt::WindowModal);
     }
     
     // consider just the first selected index
