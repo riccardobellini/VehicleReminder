@@ -34,6 +34,7 @@ class QItemSelection;
 class QDataWidgetMapper;
 class QTimer;
 class QLabel;
+class QEvent;
 class KMessageWidget;
 class KMenu;
 class KAction;
@@ -47,6 +48,9 @@ public:
     virtual ~ProfileManagerWidget();
     
     void setProxyModel(ProfileProxyModel * model);
+    
+protected:
+    virtual bool eventFilter(QObject * target, QEvent * event);
 
 private slots:
     void m_updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected);

@@ -31,6 +31,7 @@
 #include <qstyleditemdelegate.h>
 #include <qtimer.h>
 #include <qdesktopwidget.h>
+#include <QKeyEvent>
 
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
@@ -146,6 +147,24 @@ void ProfileManagerWidget::setProxyModel(ProfileProxyModel* model)
 }
 
 
+// protected methods
+bool ProfileManagerWidget::eventFilter(QObject * target, QEvent * event)
+{
+    // handle escape key press (to close picture view)
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->key() == Qt::Key_Escape) {
+            // close the widget if shown
+            if (m_pictureLabel->isVisible()) {
+                m_pictureLabel->close();
+            }
+        }
+    }
+    return QWidget::eventFilter(target, event);
+}
+
+
+
 // private slots
 void ProfileManagerWidget::m_updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected)
 {
@@ -231,6 +250,8 @@ void ProfileManagerWidget::m_viewPicture()
     // initialize picture label, if necessary
     if (!m_pictureLabel) {
         m_pictureLabel = new QLabel;
+        // make the widget close when escape key is pressed
+        m_pictureLabel->installEventFilter(this);
         // FIXME window flags?
     }
     
