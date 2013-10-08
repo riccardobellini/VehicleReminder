@@ -30,6 +30,7 @@
 #include <qdatawidgetmapper.h>
 #include <qstyleditemdelegate.h>
 #include <qtimer.h>
+#include <qdesktopwidget.h>
 
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
@@ -245,6 +246,12 @@ void ProfileManagerWidget::m_viewPicture()
     }
     m_pictureLabel->setPixmap(picturePixmap);
     m_pictureLabel->adjustSize();
+    // move the label to the center of the screen
+    QDesktopWidget desktopWidget;
+    QRect screenRect = desktopWidget.screenGeometry();
+    int xOffset = (screenRect.width() - m_pictureLabel->width()) / 2;
+    int yOffset = (screenRect.height() - m_pictureLabel->height()) / 2;
+    m_pictureLabel->move(xOffset, yOffset);
     m_pictureLabel->show();
 }
 
