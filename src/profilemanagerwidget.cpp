@@ -19,7 +19,9 @@
 
 // KDE includes
 #include <kmessagewidget.h>
+#include <kmenu.h>
 #include <kdebug.h>
+#include <kaction.h>
 
 // Qt includes
 #include <qabstractitemmodel.h>
@@ -40,7 +42,7 @@
 
 
 ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, QWidget * parent) : QWidget(parent),
-    ui(new Ui::ProfileManager), m_originalModel(originalModel), m_proxyModel(0)
+    ui(new Ui::ProfileManager), m_originalModel(originalModel), m_proxyModel(0), m_contextMenu(0)
 {
     ui->setupUi(this);
     
@@ -110,6 +112,9 @@ ProfileManagerWidget::ProfileManagerWidget(QAbstractItemModel * originalModel, Q
     
     // setup mappings with widgets
     m_setupDataMapper();
+    
+    // setup context menu for the list view
+    m_setupContextMenu();
 }
 
 
@@ -184,7 +189,34 @@ void ProfileManagerWidget::m_checkEnableApplyChangesButton()
 
 void ProfileManagerWidget::m_contextMenuRequested(const QPoint & pos)
 {
-    QModelIndex index = ui->profileView->indexAt(pos);    
+    QModelIndex index = ui->profileView->indexAt(pos);
+    
+    if (!index.isValid()) {
+        // disable picture-related actions
+        m_viewPictureAction->setEnabled(false);
+        m_changePictureAction->setEnabled(false);
+        // execute the context menu
+        m_contextMenu->exec(mapToGlobal(pos));
+        // re-enable the disabled actions
+        m_viewPictureAction->setEnabled(true);
+        m_changePictureAction->setEnabled(true);
+    }
+    else {
+        // just execute the context menu
+        m_contextMenu->exec(mapToGlobal(pos));
+    }
+}
+
+
+void ProfileManagerWidget::m_viewPicture()
+{
+    // TODO
+}
+
+
+void ProfileManagerWidget::m_changePicture()
+{
+    // TODO
 }
 
 
@@ -208,4 +240,28 @@ void ProfileManagerWidget::m_setupDataMapper()
     m_dataMapper->addMapping(ui->validityYearsNumInput, layouts::profile::LicenseValidityYears);
     m_dataMapper->addMapping(ui->notifyCheckBox, layouts::profile::Notify);
     m_dataMapper->addMapping(ui->otherNotesTextEdit, layouts::profile::OtherNotes);
+}
+
+
+void ProfileManagerWidget::m_setupContextMenu()
+{
+    // initialize context menu
+    m_contextMenu = new KMenu(ui->profileView);
+    
+    // setup context menu actions
+    m_changePictureAction = new KAction(this);
+    m_changePictureAction->setText(i18n("Change picture"));
+    m_changePictureAction->setIcon(KIcon("document-open"));
+    
+    m_viewPictureAction = new KAction(this);
+    m_viewPictureAction->setText(i18n("View picture"));
+    m_viewPictureAction->setIcon(KIcon("zoom-in"));
+    
+    m_contextMenu->addAction(m_viewPictureAction);
+    m_contextMenu->addAction(m_changePictureAction);
+    
+    connect(m_viewPictureAction, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
+            SLOT(m_viewPicture()));
+    connect(m_changePictureAction, SIGNAL(triggered(Qt::MouseButtons,Qt::KeyboardModifiers)),
+            SLOT(m_changePicture()));
 }

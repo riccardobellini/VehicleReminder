@@ -34,6 +34,8 @@ class QItemSelection;
 class QDataWidgetMapper;
 class QTimer;
 class KMessageWidget;
+class KMenu;
+class KAction;
 
 class ProfileManagerWidget : public QWidget
 {
@@ -50,8 +52,12 @@ private slots:
     
     void m_contextMenuRequested(const QPoint & pos);
     
+    void m_viewPicture();
+    void m_changePicture();
+    
 private:
     void m_setupDataMapper();
+    void m_setupContextMenu();
     
     Ui::ProfileManager *ui;
     
@@ -62,6 +68,11 @@ private:
     
     KMessageWidget *m_messageWidget;
     QTimer *m_messageWidgetHidingTimer;
+    
+    // context menu and actions
+    KMenu *m_contextMenu;
+    KAction *m_changePictureAction;
+    KAction *m_viewPictureAction;
 };
 
 #endif // PROFILEMANAGERWIDGET_H
