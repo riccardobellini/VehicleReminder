@@ -22,6 +22,7 @@
 #include <kmenu.h>
 #include <kdebug.h>
 #include <kaction.h>
+#include <kfiledialog.h>
 
 // Qt includes
 #include <qabstractitemmodel.h>
@@ -30,8 +31,11 @@
 #include <qdatawidgetmapper.h>
 #include <qstyleditemdelegate.h>
 #include <qtimer.h>
+#include <qbuffer.h>
+#include <qimagewriter.h>
 #include <qdesktopwidget.h>
 #include <QKeyEvent>
+#include <qsqlrecord.h>
 
 // Vehicle Reminder includes
 #include "profilemanagerwidget.h"
@@ -280,7 +284,43 @@ void ProfileManagerWidget::m_viewPicture()
 
 void ProfileManagerWidget::m_changePicture()
 {
-    // TODO
+    QModelIndexList selectedIndexes = ui->profileView->selectionModel()->selectedIndexes();
+    
+    if (selectedIndexes.isEmpty()) {
+        return;
+    }
+    
+    QModelIndex selectedIndex = selectedIndexes.first();
+    QModelIndex selectedIndexOriginalModel = m_proxyModel->mapToSource(selectedIndex);
+    
+    QString imagePath = KFileDialog::getOpenFileName(KUrl(QDir::homePath()), "image/png image/jpeg image/bmp image/gif", this);
+    
+    if (imagePath.isEmpty()) {
+        return;
+    }
+    
+    QImage newProfilePicture(imagePath);
+    QByteArray byteArray;
+    // adjust the size of the image, if necessary
+    if (newProfilePicture.width() > ProfilePictureSize.width() ||
+        newProfilePicture.height() > ProfilePictureSize.height()) {
+        newProfilePicture = newProfilePicture.scaled(ProfilePictureSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
+    // write the image in a byte array
+    QBuffer buffer;
+    QImageWriter imageWriter(&buffer, "PNG");
+    imageWriter.write(newProfilePicture);
+    byteArray.append(buffer.data());
+    
+    // get record of selected index
+    QSqlTableModel *model = qobject_cast<QSqlTableModel *>(m_originalModel);
+    QSqlRecord record = model->record(selectedIndexOriginalModel.row());
+    // set the new picture in the record
+    record.setValue(layouts::profile::Picture, byteArray);
+    // set the record in the original model
+    if (!model->setRecord(selectedIndexOriginalModel.row(), record)) {
+        kError() << model->lastError().text();
+    }
 }
 
 
