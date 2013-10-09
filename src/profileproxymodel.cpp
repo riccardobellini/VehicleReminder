@@ -81,7 +81,7 @@ QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
         }
         if (role == Qt::DecorationRole) {
             // scale the image
-            image = image.scaled(QSize(64, 64), Qt::KeepAspectRatio, Qt::FastTransformation);
+            image = image.scaledToHeight(ProfilePicturePreviewSize.height(), Qt::FastTransformation);
         }
         QVariant variant = image;
         return variant;
