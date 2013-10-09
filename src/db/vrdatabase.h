@@ -67,7 +67,6 @@ public:
     QSqlDatabase getDatabase() const;
     
     static const QString LatestVersion;
-    static const QSize ProfilePictureSize;
     
 private:
     bool m_initProfileTable(const QString &toVersion = LatestVersion);

@@ -29,14 +29,13 @@
 
 // Vehicle Reminder includes
 #include "vrdatabase.h"
+#include "constants.h"
 
 
 using structures::Profile;
 
 
 const QString VRDatabase::LatestVersion = "0.1";
-const QSize VRDatabase::ProfilePictureSize = QSize(720, 480);
-
 
 VRDatabase::VRDatabase(QObject *parent) : QObject(parent)
 {

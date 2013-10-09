@@ -22,6 +22,7 @@
 
 #include <qsize.h>
 
+const QSize ProfilePictureSize = QSize(720, 480);
 const QSize ProfilePicturePreviewSize = QSize(64, 64);
 const QSize ProfileViewGridSize = QSize(100, 100);
 const int MaxProfileNameWidth = 100;
