@@ -43,8 +43,6 @@ AddProfileDialog::AddProfileDialog(QWidget* parent): KDialog(parent)
     setButtons(KDialog::Ok | KDialog::Cancel);
     
     setMainWidget(m_widget);
-    
-//     connect(this, SIGNAL(okClicked()), SLOT(m_accept()));
 }
 
 
