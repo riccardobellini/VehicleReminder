@@ -68,8 +68,14 @@ public:
     
     ~AddProfileWidget();
     
+Q_SIGNALS:
+    void enableOk(bool enable);
+    
 public Q_SLOTS:
     void loadPicture();
+    
+private Q_SLOTS:
+    void m_changed();
     
 private:
     Ui::AddProfile *ui;

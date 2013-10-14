@@ -43,6 +43,14 @@ AddProfileDialog::AddProfileDialog(QWidget* parent): KDialog(parent)
     setButtons(KDialog::Ok | KDialog::Cancel);
     
     setMainWidget(m_widget);
+    
+    connect(m_widget, SIGNAL(enableOk(bool)), SLOT(enableButtonOk(bool)));
+    
+    // disable initially the ok button
+    enableButtonOk(false);
+    
+    // reset the fields
+    m_widget->resetFields();
 }
 
 
@@ -55,6 +63,8 @@ structures::Profile AddProfileDialog::getProfile() const
 void AddProfileDialog::reset()
 {
     m_widget->resetFields();
+    // disable the ok button
+    enableButtonOk(false);
 }
 
 
@@ -117,6 +127,10 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     
     // connections
     connect(ui->picturePushButton, SIGNAL(pressed()), this, SLOT(loadPicture()));
+    
+    connect(ui->firstNameLineEdit, SIGNAL(textEdited(QString)), SLOT(m_changed()));
+    connect(ui->lastNameLineEdit, SIGNAL(textEdited(QString)), SLOT(m_changed()));
+    connect(ui->licenseNumberLineEdit, SIGNAL(textEdited(QString)), SLOT(m_changed()));
 }
 
 
@@ -137,6 +151,10 @@ void AddProfileWidget::resetFields()
     
     // reset profile picture
     m_currentProfilePicture = QPixmap();
+    
+    ui->firstNameLineEdit->setPlaceholderText(i18n("Enter your first name..."));
+    ui->lastNameLineEdit->setPlaceholderText(i18n("Enter your last name..."));
+    ui->licenseNumberLineEdit->setPlaceholderText(i18n("Enter your license number..."));
 }
 
 
@@ -197,6 +215,25 @@ void AddProfileWidget::loadPicture()
     
     // modify the text of the button
     ui->picturePushButton->setText(i18n("Change..."));
+}
+
+
+// private slots
+void AddProfileWidget::m_changed()
+{
+    bool toBeEnabled = !ui->firstNameLineEdit->text().isEmpty() && !ui->lastNameLineEdit->text().isEmpty() &&
+        !ui->licenseNumberLineEdit->text().isEmpty();
+    emit enableOk(toBeEnabled);
+    
+    if (!ui->firstNameLineEdit->text().isEmpty()) {
+        ui->firstNameLineEdit->setPlaceholderText(i18n("Enter your first name..."));
+    }
+    if (!ui->lastNameLineEdit->text().isEmpty()) {
+        ui->lastNameLineEdit->setPlaceholderText(i18n("Enter your last name..."));
+    }
+    if (!ui->licenseNumberLineEdit->text().isEmpty()) {
+        ui->licenseNumberLineEdit->setPlaceholderText(i18n("Enter your license number..."));
+    }
 }
 
 
