@@ -29,6 +29,8 @@
 
 
 class AddProfileWidget;
+class QTimer;
+class KMessageWidget;
 
 namespace Ui
 {
@@ -37,12 +39,16 @@ namespace Ui
 
 class AddProfileDialog : public KDialog
 {
+    Q_OBJECT
 public:
     explicit AddProfileDialog(QWidget *parent = 0);
     
     structures::Profile getProfile() const;
     
     void reset();
+    
+public Q_SLOTS:
+    virtual void accept();
     
 private:
     AddProfileWidget *m_widget;
@@ -56,6 +62,7 @@ public:
     explicit AddProfileWidget(QWidget *parent = 0);
     
     void resetFields();
+    bool checkFields();
     
     structures::Profile constructProfile() const;
     
@@ -68,6 +75,9 @@ private:
     Ui::AddProfile *ui;
     
     QPixmap m_currentProfilePicture;
+    
+    KMessageWidget *m_messageWidget;
+    QTimer *m_messageWidgetHidingTimer;
 };
 
 #endif // ADDPROFILEDIALOG_H

@@ -19,9 +19,12 @@
 
 // KDE includes
 #include <kfiledialog.h>
+#include <kmessagewidget.h>
+#include <kdebug.h>
 
 // Qt includes
 #include <QDateEdit>
+#include <qtimer.h>
 
 // Vehicle Reminder includes
 #include "addprofiledialog.h"
@@ -40,6 +43,8 @@ AddProfileDialog::AddProfileDialog(QWidget* parent): KDialog(parent)
     setButtons(KDialog::Ok | KDialog::Cancel);
     
     setMainWidget(m_widget);
+    
+//     connect(this, SIGNAL(okClicked()), SLOT(m_accept()));
 }
 
 
@@ -55,6 +60,19 @@ void AddProfileDialog::reset()
 }
 
 
+// public slots
+void AddProfileDialog::accept()
+{
+    // check correctness of dates
+    if (!m_widget->checkFields()) {
+        kDebug() << "False check fields";
+        return;
+    }
+    
+    KDialog::accept();
+}
+
+
 AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui::AddProfile)
 {
     ui->setupUi(this);
@@ -67,20 +85,37 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     ui->birthDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->birthDateEdit->setMinimumDate(minDate);
     ui->birthDateEdit->setMaximumDate(maxDate);
+    ui->birthDateEdit->setDate(maxDate.addYears(-18));
     
     // FIXME try to use KDateComboBox rather than QDateEdit
     ui->issuingDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->issuingDateEdit->setMinimumDate(minDate);
     ui->issuingDateEdit->setMaximumDate(maxDate);
+    ui->issuingDateEdit->setDate(minDate);
     
     // FIXME try to use KDateComboBox rather than QDateEdit
     ui->expirationDateEdit->setDisplayFormat("dd/MM/yyyy");
-    ui->expirationDateEdit->setMinimumDate(maxDate);
+    ui->expirationDateEdit->setMinimumDate(minDate);
     ui->expirationDateEdit->setMaximumDate(maxDate.addYears(20));
+    ui->expirationDateEdit->setDate(maxDate);
     
     ui->validityYearsNumInput->setRange(0, 20);
     
     ui->notifyCheckBox->setChecked(false);
+    
+    // insert message widget
+    m_messageWidget = new KMessageWidget;
+    m_messageWidget->setCloseButtonVisible(true);
+    m_messageWidget->setMessageType(KMessageWidget::Warning);
+    m_messageWidget->hide();
+    
+    QGridLayout *mainLayout = qobject_cast<QGridLayout *>(layout());
+    mainLayout->addWidget(m_messageWidget, 1, 0, 1, 2);
+    
+    m_messageWidgetHidingTimer = new QTimer(this);
+    m_messageWidgetHidingTimer->setSingleShot(true);
+    m_messageWidgetHidingTimer->setInterval(4000);
+    connect(m_messageWidgetHidingTimer, SIGNAL(timeout()), m_messageWidget, SLOT(animatedHide()));
     
     // connections
     connect(ui->picturePushButton, SIGNAL(pressed()), this, SLOT(loadPicture()));
@@ -104,6 +139,21 @@ void AddProfileWidget::resetFields()
     
     // reset profile picture
     m_currentProfilePicture = QPixmap();
+}
+
+
+bool AddProfileWidget::checkFields()
+{
+    kDebug() << ui->expirationDateEdit->date();
+    if (ui->expirationDateEdit->date() < QDate::currentDate()) {
+        m_messageWidget->setText(i18n("Expiration date must not precede current date"));
+        m_messageWidget->animatedShow();
+        // start the timer
+        m_messageWidgetHidingTimer->start();
+        return false;
+    }
+    
+    return true;
 }
 
 
