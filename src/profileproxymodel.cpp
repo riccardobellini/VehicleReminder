@@ -72,15 +72,17 @@ QVariant ProfileProxyModel::data(const QModelIndex & proxyIndex, int role) const
         }
         return result;
     }
-    if (role == Qt::DecorationRole) {
+    if (role == Qt::DecorationRole || role == PictureRole) {
         QModelIndex pictureIndex = sourceIndex.sibling(sourceIndex.row(), layouts::profile::Picture);
         QByteArray byteArray = pictureIndex.data().toByteArray();
         QImage image;
         if (!image.loadFromData(byteArray)) {
             return QVariant();
         }
-        // scale the image
-        image = image.scaled(QSize(64, 64), Qt::KeepAspectRatio, Qt::FastTransformation);
+        if (role == Qt::DecorationRole) {
+            // scale the image
+            image = image.scaledToHeight(ProfilePicturePreviewSize.height(), Qt::FastTransformation);
+        }
         QVariant variant = image;
         return variant;
     }

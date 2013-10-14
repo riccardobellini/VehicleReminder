@@ -28,17 +28,60 @@ namespace Ui
 {
     class ProfileManager;
 }
+class QAbstractItemModel;
 class ProfileProxyModel;
+class QItemSelection;
+class QDataWidgetMapper;
+class QTimer;
+class QLabel;
+class QEvent;
+class KMessageWidget;
+class KMenu;
+class KAction;
 
 class ProfileManagerWidget : public QWidget
 {
+    Q_OBJECT
 public:
-    ProfileManagerWidget(QWidget * parent = 0);
+    ProfileManagerWidget(QAbstractItemModel * originalModel, QWidget * parent = 0);
     
-    void initModel(ProfileProxyModel * model);
+    virtual ~ProfileManagerWidget();
+    
+    void setProxyModel(ProfileProxyModel * model);
+    
+protected:
+    virtual bool eventFilter(QObject * target, QEvent * event);
 
+private slots:
+    void m_updateDataMapperIndex(const QItemSelection & selected, const QItemSelection & deselected);
+    void m_applyChanges();
+    void m_checkEnableApplyChangesButton();
+    
+    void m_contextMenuRequested(const QPoint & pos);
+    
+    void m_viewPicture();
+    void m_changePicture();
+    
 private:
+    void m_setupDataMapper();
+    void m_setupContextMenu();
+    
     Ui::ProfileManager *ui;
+    
+    QAbstractItemModel *m_originalModel;
+    ProfileProxyModel *m_proxyModel;
+    
+    QDataWidgetMapper *m_dataMapper;
+    
+    KMessageWidget *m_messageWidget;
+    QTimer *m_messageWidgetHidingTimer;
+    
+    // context menu and actions
+    KMenu *m_contextMenu;
+    KAction *m_changePictureAction;
+    KAction *m_viewPictureAction;
+    
+    QLabel *m_pictureLabel;
 };
 
 #endif // PROFILEMANAGERWIDGET_H

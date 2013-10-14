@@ -3,7 +3,7 @@
 
 FIND_PACKAGE(Qt4 COMPONENTS QtSql REQUIRED)
 
-INCLUDE_DIRECTORIES(../structures)
+INCLUDE_DIRECTORIES(../ ../structures)
 
 SET(VRDB_SRCS
     vrdatabase.cpp
