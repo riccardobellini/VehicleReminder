@@ -170,6 +170,17 @@ void MainWindow::removeProfile()
 }
 
 
+// private slots
+void MainWindow::m_activateWidget(const QModelIndex & index)
+{
+    if (index.isValid()) {
+        d->m_mainStackedWidget->setCurrentIndex(index.row());
+        return;
+    }
+    kDebug() << "Invalid index selected";
+}
+
+
 void MainWindow::m_setupActions()
 {
     d->m_addProfileAction = new KAction(KIcon("list-add-user"), i18n("Add profile"), this);
@@ -211,5 +222,6 @@ void MainWindow::m_setupContentsList()
     d->m_profileManagerWidget->setProxyModel(d->m_profileProxyModel);
     d->m_mainStackedWidget->addWidget(d->m_profileManagerWidget);
     d->m_profileManagerWidget->show();
-    // TODO connect signals and slots for activation of different widgets
+
+    connect(d->ui.klistwidget, SIGNAL(clicked(QModelIndex)), SLOT(m_activateWidget(QModelIndex)));
 }

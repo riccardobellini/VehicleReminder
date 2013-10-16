@@ -25,6 +25,7 @@
 
 
 class MainWindowPrivate;
+class QModelIndex;
 
 class MainWindow : public KXmlGuiWindow
 {
@@ -37,12 +38,19 @@ public Q_SLOTS:
     void openProfile();
     void removeProfile();
     
+private Q_SLOTS:
+    void m_activateWidget(const QModelIndex & index);
+    
 private:
     void m_setupActions();
     void m_setupContentsList();
     // private class for view elements
     // code inspired from Skrooge base gui
     MainWindowPrivate* const d;
+    
+    enum ContentWidgetIndex {
+        ProfileManager = 0
+    };
 };
 
 #endif // MAINWINDOW_H
