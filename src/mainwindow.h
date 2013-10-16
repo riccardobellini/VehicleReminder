@@ -39,7 +39,7 @@ public Q_SLOTS:
     void removeProfile();
     
 private Q_SLOTS:
-    void m_activateWidget(const QModelIndex & index);
+    void m_activateWidget();
     
 private:
     void m_setupActions();

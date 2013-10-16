@@ -171,8 +171,9 @@ void MainWindow::removeProfile()
 
 
 // private slots
-void MainWindow::m_activateWidget(const QModelIndex & index)
+void MainWindow::m_activateWidget()
 {
+    QModelIndex index = d->ui.klistwidget->selectionModel()->selectedIndexes().first();
     if (index.isValid()) {
         d->m_mainStackedWidget->setCurrentIndex(index.row());
         return;
@@ -202,6 +203,9 @@ void MainWindow::m_setupActions()
 
 void MainWindow::m_setupContentsList()
 {
+    // set properties of list
+    d->ui.klistwidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    
     // add element to the main list
     QListWidgetItem *profileManagerItem = new QListWidgetItem;
     profileManagerItem->setText(i18n("Profile manager"));
@@ -223,5 +227,5 @@ void MainWindow::m_setupContentsList()
     d->m_mainStackedWidget->addWidget(d->m_profileManagerWidget);
     d->m_profileManagerWidget->show();
 
-    connect(d->ui.klistwidget, SIGNAL(clicked(QModelIndex)), SLOT(m_activateWidget(QModelIndex)));
+    connect(d->ui.klistwidget, SIGNAL(itemSelectionChanged()), SLOT(m_activateWidget()));
 }
