@@ -25,6 +25,7 @@
 const QSize ProfilePictureSize = QSize(720, 480);
 const QSize ProfilePicturePreviewSize = QSize(64, 64);
 const QSize ProfileViewGridSize = QSize(100, 100);
+const QSize ContentsListIconSize = QSize(22, 22);
 const int MaxProfileNameWidth = 100;
 
 #endif // CONSTANTS_H

@@ -42,6 +42,7 @@
 #include "profilemanagerwidget.h"
 #include "profile.h"
 #include "profileproxymodel.h"
+#include "constants.h"
 
 // Uis includes
 #include "ui_mainwidget.h"
@@ -205,12 +206,14 @@ void MainWindow::m_setupContentsList()
 {
     // set properties of list
     d->ui.klistwidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    d->ui.klistwidget->setIconSize(ContentsListIconSize);
     
     // add element to the main list
     QListWidgetItem *profileManagerItem = new QListWidgetItem;
     profileManagerItem->setText(i18n("Profile manager"));
     profileManagerItem->setStatusTip(i18n("Click to review and edit profiles"));
     profileManagerItem->setToolTip(i18n("Review and edit profiles"));
+    profileManagerItem->setIcon(KIcon("user-identity"));
     d->ui.klistwidget->addItem(profileManagerItem);
     
     // initialize profile model and proxy
