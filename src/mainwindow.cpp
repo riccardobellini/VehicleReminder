@@ -216,6 +216,13 @@ void MainWindow::m_setupContentsList()
     profileManagerItem->setIcon(KIcon("user-identity"));
     d->ui.klistwidget->addItem(profileManagerItem);
     
+    QListWidgetItem *vehicleInfoManagerItem = new QListWidgetItem;
+    vehicleInfoManagerItem->setText(i18n("Vehicle info"));
+    vehicleInfoManagerItem->setStatusTip(i18n("Click to view information about vehicle information"));
+    vehicleInfoManagerItem->setToolTip(i18n("Add/edit vehicle information"));
+    // TODO add icon to vehicle info manager item
+    d->ui.klistwidget->addItem(vehicleInfoManagerItem);
+    
     // initialize profile model and proxy
     d->m_profileModel = new QSqlTableModel(this, d->m_database->getDatabase());
     d->m_profileModel->setEditStrategy(QSqlTableModel::OnFieldChange);
