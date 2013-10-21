@@ -10,6 +10,7 @@ INCLUDE_DIRECTORIES(structures)
 SET(VR_SRCS
     addprofiledialog.cpp
     profilemanagerwidget.cpp
+    vehicleinfomanagerwidget.cpp
     profileproxymodel.cpp
     mainwindow.cpp
     main.cpp
