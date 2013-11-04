@@ -42,6 +42,7 @@
 #include "profilemanagerwidget.h"
 #include "profile.h"
 #include "profileproxymodel.h"
+#include "vehicleinfomanagerwidget.h"
 #include "constants.h"
 
 // Uis includes
@@ -66,6 +67,8 @@ public:
     ProfileManagerWidget *m_profileManagerWidget;
     QSqlTableModel *m_profileModel;
     ProfileProxyModel *m_profileProxyModel;
+    
+    VehicleInfoManagerWidget *m_vehicleInfoManagerWidget;
 };
 
 
@@ -235,7 +238,9 @@ void MainWindow::m_setupContentsList()
     d->m_profileManagerWidget = new ProfileManagerWidget(d->m_profileModel);
     d->m_profileManagerWidget->setProxyModel(d->m_profileProxyModel);
     d->m_mainStackedWidget->addWidget(d->m_profileManagerWidget);
-    d->m_profileManagerWidget->show();
+    
+    d->m_vehicleInfoManagerWidget = new VehicleInfoManagerWidget();
+    d->m_mainStackedWidget->addWidget(d->m_vehicleInfoManagerWidget);
 
     connect(d->ui.klistwidget, SIGNAL(itemSelectionChanged()), SLOT(m_activateWidget()));
 }
