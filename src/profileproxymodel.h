@@ -32,6 +32,7 @@
  */
 class ProfileProxyModel : public QAbstractProxyModel
 {
+    Q_OBJECT
 public:
     explicit ProfileProxyModel(QObject * parent = 0);
     
@@ -39,6 +40,7 @@ public:
         PictureRole = Qt::UserRole
     };
     
+    virtual void setSourceModel(QAbstractItemModel * sourceModel);
     virtual QModelIndex mapFromSource(const QModelIndex& sourceIndex) const;
     virtual QModelIndex mapToSource(const QModelIndex& proxyIndex) const;
     virtual QVariant data(const QModelIndex & proxyIndex, int role = Qt::DisplayRole) const;
@@ -49,6 +51,10 @@ public:
     virtual void fetchMore(const QModelIndex & parent);
     virtual QModelIndex parent(const QModelIndex& child) const;
     virtual QModelIndex index(int row, int column, const QModelIndex& parent) const;
+    
+private slots:
+    void m_modelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight);
+    void m_modelRowInserted(const QModelIndex & parent, int start, int end);
 };
 
 #endif // PROFILEPROXYMODEL_H

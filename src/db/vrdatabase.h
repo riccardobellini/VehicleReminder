@@ -61,9 +61,7 @@ public:
     
     bool init();
     bool migrate(const QString &from, const QString &to);
-    
-    bool insertNewProfile(const structures::Profile &profile);
-    
+        
     QSqlDatabase getDatabase() const;
     
     static const QString LatestVersion;

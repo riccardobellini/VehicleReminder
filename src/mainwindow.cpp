@@ -34,6 +34,9 @@
 #include <qsplitter.h>
 #include <qstackedwidget.h>
 #include <qsqltablemodel.h>
+#include <qsqlrecord.h>
+#include <qbuffer.h>
+#include <qimagewriter.h>
 
 // Vehicle Reminder includes
 #include "mainwindow.h"
@@ -154,7 +157,34 @@ void MainWindow::addProfile()
     int result = d->m_addProfileDialog->exec();
     if (result == KDialog::Accepted) {
         Profile newProfile = d->m_addProfileDialog->getProfile();
-        d->m_database->insertNewProfile(newProfile);
+        // add the profile to the database
+        QSqlRecord record = d->m_profileModel->record();
+        record.setValue(layouts::profile::FirstName, newProfile.firstName);
+        record.setValue(layouts::profile::LastName, newProfile.lastName);
+        record.setValue(layouts::profile::BirthDate, newProfile.birthDate);
+        record.setValue(layouts::profile::Ssn, newProfile.ssn);
+        // prepare insertion of picture
+        QByteArray byteArray;
+        // convert pixmap to image
+        QImage profileImage = newProfile.picture.toImage();
+        // reduce it to a suitable format
+        if (profileImage.size().width() > ProfilePictureSize.width() ||
+            profileImage.size().height() > ProfilePictureSize.height()) {
+            profileImage = profileImage.scaled(ProfilePictureSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
+        QBuffer buffer;
+        QImageWriter imageWriter(&buffer, "PNG");
+        imageWriter.write(profileImage);
+        byteArray.append(buffer.data());
+        record.setValue(layouts::profile::Picture, byteArray);
+        record.setValue(layouts::profile::LicenseNumber, newProfile.licenseNumber);
+        record.setValue(layouts::profile::IssuingDate, newProfile.issuingDate);
+        record.setValue(layouts::profile::LicenseExpiry, newProfile.licenseExpiryDate);
+        record.setValue(layouts::profile::LicenseValidityYears, newProfile.licenseValidityYears);
+        record.setValue(layouts::profile::OtherNotes, newProfile.otherNotes);
+        record.setValue(layouts::profile::Notify, newProfile.notify);
+        // append the record to the model
+        d->m_profileModel->insertRecord(-1, record);
     }
 }
 

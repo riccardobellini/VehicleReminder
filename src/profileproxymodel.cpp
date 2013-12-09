@@ -28,11 +28,26 @@
 
 // KDE includes
 #include <kapplication.h>
+#include <kdebug.h>
 
 
 ProfileProxyModel::ProfileProxyModel(QObject * parent) : QAbstractProxyModel(parent)
 {
+    
+}
 
+
+void ProfileProxyModel::setSourceModel(QAbstractItemModel* sourceModel)
+{
+    // call the base class implementation
+    QAbstractProxyModel::setSourceModel(sourceModel);
+    // WARNING model must not be null
+    // connect dataChanged signal to private slot
+    connect(sourceModel, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)), this,
+            SLOT(m_modelDataChanged(const QModelIndex &, const QModelIndex &)));
+    // connect rowsInserted signal to private slot
+    connect(sourceModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
+            SLOT(m_modelRowInserted(const QModelIndex &, int, int)));
 }
 
 
@@ -136,4 +151,22 @@ QModelIndex ProfileProxyModel::index(int row, int column, const QModelIndex & pa
 {
     // WARNING might be wrong
     return createIndex(row, column);
+}
+
+
+
+// private slots
+void ProfileProxyModel::m_modelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
+{
+    kDebug() << "Data changed in indexes " << topLeft << " " << bottomRight;
+    emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
+}
+
+
+void ProfileProxyModel::m_modelRowInserted(const QModelIndex& parent, int start, int end)
+{
+    // insert row
+    QModelIndex proxyParent = mapFromSource(parent);
+    beginInsertRows(proxyParent, start, end);
+    endInsertRows();
 }
