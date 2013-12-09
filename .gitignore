@@ -14,3 +14,6 @@
 
 # CMake build files
 build/
+
+# KDevelop related files
+*.kdev4
