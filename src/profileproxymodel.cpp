@@ -28,7 +28,6 @@
 
 // KDE includes
 #include <kapplication.h>
-#include <kdebug.h>
 
 
 ProfileProxyModel::ProfileProxyModel(QObject * parent) : QAbstractProxyModel(parent)
@@ -158,7 +157,6 @@ QModelIndex ProfileProxyModel::index(int row, int column, const QModelIndex & pa
 // private slots
 void ProfileProxyModel::m_modelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight)
 {
-    kDebug() << "Data changed in indexes " << topLeft << " " << bottomRight;
     emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight));
 }
 
