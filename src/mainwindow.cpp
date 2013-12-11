@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
+#include <kiconloader.h>
 #include <kdebug.h>
 
 // Qt includes
@@ -166,7 +167,15 @@ void MainWindow::addProfile()
         // prepare insertion of picture
         QByteArray byteArray;
         // convert pixmap to image
-        QImage profileImage = newProfile.picture.toImage();
+        QImage profileImage;
+        if (newProfile.picture.isNull()) {
+            KIconLoader *iconLoader = KIconLoader::global();
+            QString userIconPath = iconLoader->iconPath("user-identity.png", KIconLoader::Desktop);
+            profileImage = QImage(userIconPath);
+        }
+        else {
+            profileImage = newProfile.picture.toImage();
+        }
         // reduce it to a suitable format
         if (profileImage.size().width() > ProfilePictureSize.width() ||
             profileImage.size().height() > ProfilePictureSize.height()) {
