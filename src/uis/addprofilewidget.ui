@@ -360,9 +360,13 @@
  <tabstops>
   <tabstop>firstNameLineEdit</tabstop>
   <tabstop>lastNameLineEdit</tabstop>
+  <tabstop>birthDateEdit</tabstop>
   <tabstop>ssnLineEdit</tabstop>
   <tabstop>licenseNumberLineEdit</tabstop>
+  <tabstop>issuingDateEdit</tabstop>
+  <tabstop>expirationDateEdit</tabstop>
   <tabstop>validityYearsNumInput</tabstop>
+  <tabstop>notifyCheckBox</tabstop>
   <tabstop>picturePushButton</tabstop>
   <tabstop>otherNotesTextEdit</tabstop>
  </tabstops>
