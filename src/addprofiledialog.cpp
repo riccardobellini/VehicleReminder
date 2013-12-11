@@ -92,7 +92,6 @@ AddProfileWidget::AddProfileWidget(QWidget *parent): QWidget(parent), ui(new Ui:
     // FIXME try to use KDateComboBox rather than QDateEdit
     ui->birthDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->birthDateEdit->setMinimumDate(minDate);
-    ui->birthDateEdit->setMaximumDate(maxDate);
     ui->birthDateEdit->setDate(maxDate.addYears(-18));
     
     // FIXME try to use KDateComboBox rather than QDateEdit
@@ -160,7 +159,14 @@ void AddProfileWidget::resetFields()
 
 bool AddProfileWidget::checkFields()
 {
-    kDebug() << ui->expirationDateEdit->date();
+    if (ui->expirationDateEdit->date() < QDate::currentDate() &&
+        ui->birthDateEdit->date() > QDate::currentDate()) {
+        m_messageWidget->setText(i18n("Check your birth date and license expiration date"));
+        m_messageWidget->animatedShow();
+        // start the timer
+        m_messageWidgetHidingTimer->start();
+        return false;
+    }
     if (ui->expirationDateEdit->date() < QDate::currentDate()) {
         m_messageWidget->setText(i18n("Expiration date must not precede current date"));
         m_messageWidget->animatedShow();
@@ -168,7 +174,13 @@ bool AddProfileWidget::checkFields()
         m_messageWidgetHidingTimer->start();
         return false;
     }
-    
+    if (ui->birthDateEdit->date() > QDate::currentDate()) {
+        m_messageWidget->setText(i18n("Birth date must not be a future date"));
+        m_messageWidget->animatedShow();
+        // start the timer
+        m_messageWidgetHidingTimer->start();
+        return false;
+    }
     return true;
 }
 
