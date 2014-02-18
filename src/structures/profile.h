@@ -34,17 +34,17 @@ namespace structures
      */
     struct Profile {
         // WARNING omit id temporarily
-        QString firstName;
-        QString lastName;
-        QDate birthDate;
-        QString ssn;
-        QPixmap picture;
-        QString licenseNumber;
-        QDate issuingDate;
-        QDate licenseExpiryDate;
-        int licenseValidityYears;
-        QString otherNotes;
-        bool notify;
+        QString firstName; /// first name
+        QString lastName; /// last name
+        QDate birthDate; /// birth date
+        QString ssn; /// SSN of the profile
+        QPixmap picture; /// picture of the profile
+        QString licenseNumber; /// license number of the profile
+        QDate issuingDate; /// issuing date of the license
+        QDate licenseExpiryDate; /// next expiration date of the license
+        int licenseValidityYears; /// years of validity of the license
+        QString otherNotes; /// other notes related to profile
+        bool notify; /// if expirations of license should be notified or not
         
         /// Overloading equality operator
         bool operator==(const Profile & other);
