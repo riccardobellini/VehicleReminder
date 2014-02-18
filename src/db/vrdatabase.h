@@ -33,6 +33,10 @@ namespace layouts
 {
     namespace profile
     {
+        /**
+         * @enum layouts::profile::Columns
+         * @brief This enum represents the columns of the table containing profile information
+         */
         enum Columns {
             Id = 0,
             FirstName,
