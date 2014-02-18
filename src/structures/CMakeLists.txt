@@ -3,6 +3,7 @@
 
 SET(STRUCT_SRCS
     profile.cpp
+    vehicle.cpp
 )
 
 KDE4_ADD_LIBRARY(dataStructures ${STRUCT_SRCS})
